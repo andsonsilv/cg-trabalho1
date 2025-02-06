@@ -61,7 +61,9 @@ SOURCES       = ../main.cpp \
 		../bib/Vetor3D.cpp \
 		../gui_glut/extra.cpp \
 		../gui_glut/gui.cpp \
-		../gui_glut/OpenTextures.cpp 
+		../gui_glut/OpenTextures.cpp \
+		../objetos/objeto.cpp \
+		../objetos/veiculo.cpp 
 OBJECTS       = main.o \
 		Camera.o \
 		CameraDistante.o \
@@ -71,7 +73,9 @@ OBJECTS       = main.o \
 		Vetor3D.o \
 		extra.o \
 		gui.o \
-		OpenTextures.o
+		OpenTextures.o \
+		objeto.o \
+		veiculo.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -151,7 +155,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		bib/Vetor3D.h \
 		gui_glut/extra.h \
 		gui_glut/gui.h \
-		gui_glut/OpenTextures.h ../main.cpp \
+		gui_glut/OpenTextures.h \
+		objetos/objeto.h \
+		objetos/veiculo.h ../main.cpp \
 		../bib/Camera.cpp \
 		../bib/CameraDistante.cpp \
 		../bib/CameraJogo.cpp \
@@ -160,7 +166,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../bib/Vetor3D.cpp \
 		../gui_glut/extra.cpp \
 		../gui_glut/gui.cpp \
-		../gui_glut/OpenTextures.cpp
+		../gui_glut/OpenTextures.cpp \
+		../objetos/objeto.cpp \
+		../objetos/veiculo.cpp
 QMAKE_TARGET  = GLUTdoZero
 DESTDIR       = 
 TARGET        = GLUTdoZero
@@ -415,6 +423,12 @@ gui.o: ../gui_glut/gui.cpp ../gui_glut/gui.h \
 
 OpenTextures.o: ../gui_glut/OpenTextures.cpp ../gui_glut/OpenTextures.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OpenTextures.o ../gui_glut/OpenTextures.cpp
+
+objeto.o: ../objetos/objeto.cpp ../objetos/objeto.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objeto.o ../objetos/objeto.cpp
+
+veiculo.o: ../objetos/veiculo.cpp ../objetos/veiculo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o veiculo.o ../objetos/veiculo.cpp
 
 ####### Install
 
