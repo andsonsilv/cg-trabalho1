@@ -1,11 +1,18 @@
 #include <iostream>
+#include <objetos/arvoresimples.h>
+
 using namespace std;
 
 #include <gui.h>
 
 
-Vetor3D posicaoLuz = Vetor3D(0.0,1.0,1.0);
+Vetor3D posicaoLuz = Vetor3D(1.0,1.5,1.0);
 
+ArvoreSimples minhaArvore(1.0, 0.0, 0.0,
+                          1.2, 0.2,
+                          0.5, 0.3,
+                          0.55, 0.27, 0.07,
+                          0.0, 0.8, 0.0);
 
 
 void desenhar(){
@@ -14,6 +21,7 @@ void desenhar(){
     GUI::drawOrigin(1.0);
     GUI::drawFloor();
 
+    minhaArvore.desenhar();
 
     GUI::displayEnd();
 }
