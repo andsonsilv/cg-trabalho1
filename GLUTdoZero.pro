@@ -18,9 +18,7 @@ SOURCES += main.cpp \
     bib/Vetor3D.cpp \
     gui_glut/extra.cpp \
     gui_glut/gui.cpp \
-    gui_glut/OpenTextures.cpp \
-    objetos/objeto.cpp \
-    objetos/veiculo.cpp
+    gui_glut/OpenTextures.cpp
 
 HEADERS += \
     bib/Camera.h \
@@ -31,6 +29,4 @@ HEADERS += \
     bib/Vetor3D.h \
     gui_glut/extra.h \
     gui_glut/gui.h \
-    gui_glut/OpenTextures.h \
-    objetos/objeto.h \
-    objetos/veiculo.h
+    gui_glut/OpenTextures.h
