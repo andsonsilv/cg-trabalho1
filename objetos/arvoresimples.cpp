@@ -100,6 +100,33 @@ void ArvoreSimples::desenhar() {
     }
     glEnd();
 
+    // Desenha os eixos locais, se ativado
+    if (mostrarEixos) {
+        glDisable(GL_LIGHTING);
+        glLineWidth(3.0f);
+        glBegin(GL_LINES);
+
+        // Eixo X (vermelho)
+        glColor3f(1.0, 0.0, 0.0);
+        glVertex3f(0, 0, 0);
+        glVertex3f(1.0, 0, 0);
+
+        // Eixo Y (verde)
+        glColor3f(0.0, 1.0, 0.0);
+        glVertex3f(0, 0, 0);
+        glVertex3f(0, 1.0, 0);
+
+        // Eixo Z (azul)
+        glColor3f(0.0, 0.0, 1.0);
+        glVertex3f(0, 0, 0);
+        glVertex3f(0, 0, 1.0);
+
+        glEnd();
+        glLineWidth(1.0f);
+        glEnable(GL_LIGHTING);
+    }
+
+
     // Desabilita o polygon offset e reabilita o culling para os próximos objetos
     glDisable(GL_POLYGON_OFFSET_FILL);
     glEnable(GL_CULL_FACE);

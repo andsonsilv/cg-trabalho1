@@ -8,13 +8,14 @@ public:
     float translacaoX, translacaoY, translacaoZ;
     float rotacaoX, rotacaoY, rotacaoZ;
     float escalaX, escalaY, escalaZ;
-    bool selecionado; // Novo atributo para indicar seleção
+    bool selecionado;  // Indica se o objeto está selecionado
+    bool mostrarEixos; // Indica se os eixos do sistema local devem ser desenhados
 
 public:
     Objeto() : translacaoX(0), translacaoY(0), translacaoZ(0),
         rotacaoX(0), rotacaoY(0), rotacaoZ(0),
         escalaX(1), escalaY(1), escalaZ(1),
-        selecionado(false) {} // Inicializado como não selecionado
+        selecionado(false), mostrarEixos(false) {} // Inicializado como falso
 
     void mover(float dx, float dy, float dz) {
         translacaoX += dx;
@@ -34,9 +35,12 @@ public:
         escalaZ *= sz;
     }
 
-    // Método para alternar a seleção
     void setSelecionado(bool sel) {
         selecionado = sel;
+    }
+
+    void setMostrarEixos(bool mostrar) {
+        mostrarEixos = mostrar;
     }
 
     virtual void desenhar() = 0;

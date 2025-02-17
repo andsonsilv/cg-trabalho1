@@ -59,9 +59,8 @@ void teclado(unsigned char tecla, int x, int y) {
     Objeto* obj = selecionaArvoreSimples ? (Objeto*)&minhaArvore : (Objeto*)&minhaArvoreComplexa;
 
     switch (tecla) {
-    // Alternar árvore e alternar seleção visual
+    // Alternar entre as árvores
     case 't':
-        // Desativa o objeto atualmente selecionado
         if (selecionaArvoreSimples) {
             minhaArvore.setSelecionado(false);
             minhaArvoreComplexa.setSelecionado(true);
@@ -73,6 +72,12 @@ void teclado(unsigned char tecla, int x, int y) {
             selecionaArvoreSimples = true;
             cout << "Selecionada: Arvore Simples" << endl;
         }
+        break;
+
+        // Alternar exibição dos eixos do objeto ativo
+    case 'e':
+        obj->setMostrarEixos(!obj->mostrarEixos);
+        cout << "Exibição dos eixos: " << (obj->mostrarEixos ? "Ativada" : "Desativada") << endl;
         break;
 
         // Movimentação
