@@ -63,6 +63,7 @@ SOURCES       = ../main.cpp \
 		../gui_glut/gui.cpp \
 		../gui_glut/OpenTextures.cpp \
 		../objetos/arvore.cpp \
+		../objetos/arvorecomplexa.cpp \
 		../objetos/arvoresimples.cpp 
 OBJECTS       = main.o \
 		Camera.o \
@@ -75,6 +76,7 @@ OBJECTS       = main.o \
 		gui.o \
 		OpenTextures.o \
 		arvore.o \
+		arvorecomplexa.o \
 		arvoresimples.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -157,6 +159,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		gui_glut/gui.h \
 		gui_glut/OpenTextures.h \
 		objetos/arvore.h \
+		objetos/arvorecomplexa.h \
 		objetos/arvoresimples.h ../main.cpp \
 		../bib/Camera.cpp \
 		../bib/CameraDistante.cpp \
@@ -168,6 +171,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../gui_glut/gui.cpp \
 		../gui_glut/OpenTextures.cpp \
 		../objetos/arvore.cpp \
+		../objetos/arvorecomplexa.cpp \
 		../objetos/arvoresimples.cpp
 QMAKE_TARGET  = GLUTdoZero
 DESTDIR       = 
@@ -429,7 +433,11 @@ OpenTextures.o: ../gui_glut/OpenTextures.cpp ../gui_glut/OpenTextures.h
 arvore.o: ../objetos/arvore.cpp ../objetos/arvore.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arvore.o ../objetos/arvore.cpp
 
-arvoresimples.o: ../objetos/arvoresimples.cpp ../objetos/arvore.h
+arvorecomplexa.o: ../objetos/arvorecomplexa.cpp ../objetos/arvorecomplexa.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arvorecomplexa.o ../objetos/arvorecomplexa.cpp
+
+arvoresimples.o: ../objetos/arvoresimples.cpp ../objetos/arvoresimples.h \
+		../objetos/arvore.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arvoresimples.o ../objetos/arvoresimples.cpp
 
 ####### Install

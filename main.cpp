@@ -1,5 +1,6 @@
 #include <iostream>
 #include <objetos/arvoresimples.h>
+#include <objetos/arvorecomplexa.h>
 
 using namespace std;
 
@@ -14,6 +15,13 @@ ArvoreSimples minhaArvore(1.0, 0.0, 0.0,
                           0.55, 0.27, 0.07,
                           0.0, 0.8, 0.0);
 
+// Instância de ArvoreComplexa (nova árvore com copa volumosa)
+ArvoreComplexa minhaArvoreComplexa(2.0, 0.0, 0.0,   // Posição (um pouco deslocada em x)
+                                   1.0, 0.25,             // Tronco: altura = 1.0, largura = 0.25
+                                   0.8, 0.35,             // Copa: altura offset = 0.6 (a partir do topo do tronco) e raio = 0.35
+                                   0.6, 0.3, 0.1,         // Cor do tronco (um marrom um pouco diferente)
+                                   0.0, 0.7, 0.0);
+
 
 void desenhar(){
     GUI::displayInit();
@@ -22,6 +30,7 @@ void desenhar(){
     GUI::drawFloor();
 
     minhaArvore.desenhar();
+    minhaArvoreComplexa.desenhar();
 
     GUI::displayEnd();
 }

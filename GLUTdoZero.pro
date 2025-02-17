@@ -20,6 +20,7 @@ SOURCES += main.cpp \
     gui_glut/gui.cpp \
     gui_glut/OpenTextures.cpp \
     objetos/arvore.cpp \
+    objetos/arvorecomplexa.cpp \
     objetos/arvoresimples.cpp
 
 HEADERS += \
@@ -33,4 +34,5 @@ HEADERS += \
     gui_glut/gui.h \
     gui_glut/OpenTextures.h \
     objetos/arvore.h \
+    objetos/arvorecomplexa.h \
     objetos/arvoresimples.h

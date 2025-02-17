@@ -1,18 +1,17 @@
-#include "arvoresimples.h"
+#include "arvorecomplexa.h"
 
-ArvoreSimples::ArvoreSimples(float posX, float posY, float posZ,
-                             float alturaTronco, float larguraTronco,
-                             float alturaCopa, float raioCopa,
-                             float corTroncoR, float corTroncoG, float corTroncoB,
-                             float corCopaR, float corCopaG, float corCopaB)
+ArvoreComplexa::ArvoreComplexa(float posX, float posY, float posZ,
+                               float alturaTronco, float larguraTronco,
+                               float alturaCopa, float raioCopa,
+                               float corTroncoR, float corTroncoG, float corTroncoB,
+                               float corCopaR, float corCopaG, float corCopaB)
     : Arvore(posX, posY, posZ, alturaTronco, larguraTronco,
              alturaCopa, raioCopa, corTroncoR, corTroncoG, corTroncoB,
              corCopaR, corCopaG, corCopaB)
 {
 }
 
-
-void ArvoreSimples::desenharTroncoComEspessura(float largura, float altura, float profundidade) {
+void ArvoreComplexa::desenharTroncoComEspessura(float largura, float altura, float profundidade) {
     glBegin(GL_QUADS);
     // Face frontal (z = +profundidade/2)
     glNormal3f(0, 0, 1);
@@ -58,7 +57,8 @@ void ArvoreSimples::desenharTroncoComEspessura(float largura, float altura, floa
     glEnd();
 }
 
-void ArvoreSimples::desenhar() {
+// **Método `desenhar()` corrigido**
+void ArvoreComplexa::desenhar() {
     glPushMatrix();
 
     // Translada para a posição da árvore
@@ -69,32 +69,53 @@ void ArvoreSimples::desenhar() {
     float profundidadeTronco = 0.5f * larguraTronco;
     desenharTroncoComEspessura(larguraTronco, alturaTronco, profundidadeTronco);
 
-    // ----- Desenho da Copa com glPolygonOffset para evitar conflito -----
-    // Translada para o topo do tronco
+    // ----- Desenho da Copa com Espessura -----
     glTranslatef(0.0f, alturaTronco, 0.0f);
-
-    // Habilita o offset de polígono para "empurrar" a copa para frente (no eixo z)
-    glEnable(GL_POLYGON_OFFSET_FILL);
-    glPolygonOffset(1.0f, 1.0f);
-
-    // Desabilita temporariamente o face culling para que a copa seja renderizada dos dois lados
-    glDisable(GL_CULL_FACE);
-
     glColor3f(corCopaR, corCopaG, corCopaB);
+
     const int segments = 30;
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 1.0f, 0.0f); // Normal para cima
+    float canopyThickness = 0.05f; // Espessura da copa
+
+    glBegin(GL_QUADS);
     for (int i = 0; i < segments; i++) {
+        int next = (i + 1) % segments;
         float angle = 2.0f * 3.14159265f * i / segments;
-        float dx = raioCopa * cosf(angle);
-        float dz = raioCopa * sinf(angle);
-        glVertex3f(dx, 0.0f, dz);
+        float nextAngle = 2.0f * 3.14159265f * next / segments;
+
+        float x1 = raioCopa * cosf(angle);
+        float z1 = raioCopa * sinf(angle);
+        float x2 = raioCopa * cosf(nextAngle);
+        float z2 = raioCopa * sinf(nextAngle);
+
+        glNormal3f(x1, 0, z1); // Normal apontando para fora
+        glVertex3f(x1, 0, z1);
+        glVertex3f(x2, 0, z2);
+        glVertex3f(x2, -canopyThickness, z2);
+        glVertex3f(x1, -canopyThickness, z1);
     }
     glEnd();
 
-    // Desabilita o polygon offset e reabilita o culling para os próximos objetos
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    glEnable(GL_CULL_FACE);
+    // Desenha o topo da copa
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 1.0f, 0.0f);
+    for (int i = 0; i < segments; i++) {
+        float angle = 2.0f * 3.14159265f * i / segments;
+        float x = raioCopa * cosf(angle);
+        float z = raioCopa * sinf(angle);
+        glVertex3f(x, 0, z);
+    }
+    glEnd();
+
+    // Desenha a base da copa
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 1.0f, 0.0f);
+    for (int i = segments - 1; i >= 0; i--) {
+        float angle = 2.0f * 3.14159265f * i / segments;
+        float x = raioCopa * cosf(angle);
+        float z = raioCopa * sinf(angle);
+        glVertex3f(x, -canopyThickness, z);
+    }
+    glEnd();
 
     glPopMatrix();
 }
