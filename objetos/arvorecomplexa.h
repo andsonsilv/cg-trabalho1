@@ -1,7 +1,7 @@
 #ifndef ARVORE_COMPLEXA_H
 #define ARVORE_COMPLEXA_H
 
-#include "arvore.h" // Certifique-se de que a classe base Arvore está definida
+#include "arvore.h"
 #include <GL/glut.h>
 #include <math.h>
 

@@ -62,7 +62,6 @@ SOURCES       = ../main.cpp \
 		../gui_glut/extra.cpp \
 		../gui_glut/gui.cpp \
 		../gui_glut/OpenTextures.cpp \
-		../objetos/arvore.cpp \
 		../objetos/arvorecomplexa.cpp \
 		../objetos/arvoresimples.cpp 
 OBJECTS       = main.o \
@@ -75,7 +74,6 @@ OBJECTS       = main.o \
 		extra.o \
 		gui.o \
 		OpenTextures.o \
-		arvore.o \
 		arvorecomplexa.o \
 		arvoresimples.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -160,7 +158,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		gui_glut/OpenTextures.h \
 		objetos/arvore.h \
 		objetos/arvorecomplexa.h \
-		objetos/arvoresimples.h ../main.cpp \
+		objetos/arvoresimples.h \
+		objetos/objeto.h ../main.cpp \
 		../bib/Camera.cpp \
 		../bib/CameraDistante.cpp \
 		../bib/CameraJogo.cpp \
@@ -170,7 +169,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../gui_glut/extra.cpp \
 		../gui_glut/gui.cpp \
 		../gui_glut/OpenTextures.cpp \
-		../objetos/arvore.cpp \
 		../objetos/arvorecomplexa.cpp \
 		../objetos/arvoresimples.cpp
 QMAKE_TARGET  = GLUTdoZero
@@ -374,6 +372,8 @@ compiler_clean:
 
 main.o: ../main.cpp ../objetos/arvoresimples.h \
 		../objetos/arvore.h \
+		../objetos/objeto.h \
+		../objetos/arvorecomplexa.h \
 		../gui_glut/gui.h \
 		../gui_glut/extra.h \
 		../bib/CameraDistante.h \
@@ -430,14 +430,14 @@ gui.o: ../gui_glut/gui.cpp ../gui_glut/gui.h \
 OpenTextures.o: ../gui_glut/OpenTextures.cpp ../gui_glut/OpenTextures.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OpenTextures.o ../gui_glut/OpenTextures.cpp
 
-arvore.o: ../objetos/arvore.cpp ../objetos/arvore.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arvore.o ../objetos/arvore.cpp
-
-arvorecomplexa.o: ../objetos/arvorecomplexa.cpp ../objetos/arvorecomplexa.h
+arvorecomplexa.o: ../objetos/arvorecomplexa.cpp ../objetos/arvorecomplexa.h \
+		../objetos/arvore.h \
+		../objetos/objeto.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arvorecomplexa.o ../objetos/arvorecomplexa.cpp
 
 arvoresimples.o: ../objetos/arvoresimples.cpp ../objetos/arvoresimples.h \
-		../objetos/arvore.h
+		../objetos/arvore.h \
+		../objetos/objeto.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arvoresimples.o ../objetos/arvoresimples.cpp
 
 ####### Install

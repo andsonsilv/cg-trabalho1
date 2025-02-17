@@ -57,7 +57,7 @@ void ArvoreComplexa::desenharTroncoComEspessura(float largura, float altura, flo
     glEnd();
 }
 
-// **Método `desenhar()` corrigido**
+
 void ArvoreComplexa::desenhar() {
     glPushMatrix();
 
