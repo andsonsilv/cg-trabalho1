@@ -64,14 +64,23 @@ void ArvoreSimples::desenhar() {
     // Translada para a posição da árvore
     glTranslatef(posX, posY, posZ);
 
+    // Destaca com cor branca se estiver selecionada
+    glColor3f(selecionado ? 1.0 : corTroncoR,
+              selecionado ? 1.0 : corTroncoG,
+              selecionado ? 1.0 : corTroncoB);
+
+
     // ----- Desenho do Tronco com Espessura -----
-    glColor3f(corTroncoR, corTroncoG, corTroncoB);
     float profundidadeTronco = 0.5f * larguraTronco;
     desenharTroncoComEspessura(larguraTronco, alturaTronco, profundidadeTronco);
 
     // ----- Desenho da Copa com glPolygonOffset para evitar conflito -----
     // Translada para o topo do tronco
     glTranslatef(0.0f, alturaTronco, 0.0f);
+
+    glColor3f(selecionado ? 1.0 : corCopaR,
+              selecionado ? 1.0 : corCopaG,
+              selecionado ? 1.0 : corCopaB);
 
     // Habilita o offset de polígono para "empurrar" a copa para frente (no eixo z)
     glEnable(GL_POLYGON_OFFSET_FILL);
@@ -80,7 +89,6 @@ void ArvoreSimples::desenhar() {
     // Desabilita temporariamente o face culling para que a copa seja renderizada dos dois lados
     glDisable(GL_CULL_FACE);
 
-    glColor3f(corCopaR, corCopaG, corCopaB);
     const int segments = 30;
     glBegin(GL_POLYGON);
     glNormal3f(0.0f, 1.0f, 0.0f); // Normal para cima

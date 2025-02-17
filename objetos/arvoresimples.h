@@ -5,7 +5,6 @@
 #include <GL/glut.h>
 #include <math.h>
 
-
 class ArvoreSimples : public Arvore {
 public:
     ArvoreSimples(float posX, float posY, float posZ,

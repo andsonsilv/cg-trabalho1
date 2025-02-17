@@ -59,10 +59,20 @@ void teclado(unsigned char tecla, int x, int y) {
     Objeto* obj = selecionaArvoreSimples ? (Objeto*)&minhaArvore : (Objeto*)&minhaArvoreComplexa;
 
     switch (tecla) {
-    // Alternar árvore
+    // Alternar árvore e alternar seleção visual
     case 't':
-        selecionaArvoreSimples = !selecionaArvoreSimples;
-        cout << "Alternando árvores!" << endl;
+        // Desativa o objeto atualmente selecionado
+        if (selecionaArvoreSimples) {
+            minhaArvore.setSelecionado(false);
+            minhaArvoreComplexa.setSelecionado(true);
+            selecionaArvoreSimples = false;
+            cout << "Selecionada: Arvore Complexa" << endl;
+        } else {
+            minhaArvoreComplexa.setSelecionado(false);
+            minhaArvore.setSelecionado(true);
+            selecionaArvoreSimples = true;
+            cout << "Selecionada: Arvore Simples" << endl;
+        }
         break;
 
         // Movimentação
@@ -97,6 +107,8 @@ void teclado(unsigned char tecla, int x, int y) {
 }
 
 int main() {
+    // Inicia com a árvore simples selecionada
+    minhaArvore.setSelecionado(true);
     cout << "Iniciando o sistema com árvores e transformações." << endl;
 
     GUI gui = GUI(800, 600, desenhar, teclado);

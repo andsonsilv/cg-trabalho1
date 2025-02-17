@@ -64,14 +64,21 @@ void ArvoreComplexa::desenhar() {
     // Translada para a posição da árvore
     glTranslatef(posX, posY, posZ);
 
+    // Destaca com cor branca se estiver selecionada
+    glColor3f(selecionado ? 1.0 : corTroncoR,
+              selecionado ? 1.0 : corTroncoG,
+              selecionado ? 1.0 : corTroncoB);
+
     // ----- Desenho do Tronco com Espessura -----
-    glColor3f(corTroncoR, corTroncoG, corTroncoB);
     float profundidadeTronco = 0.5f * larguraTronco;
     desenharTroncoComEspessura(larguraTronco, alturaTronco, profundidadeTronco);
 
     // ----- Desenho da Copa com Espessura -----
     glTranslatef(0.0f, alturaTronco, 0.0f);
-    glColor3f(corCopaR, corCopaG, corCopaB);
+
+    glColor3f(selecionado ? 1.0 : corCopaR,
+              selecionado ? 1.0 : corCopaG,
+              selecionado ? 1.0 : corCopaB);
 
     const int segments = 30;
     float canopyThickness = 0.05f; // Espessura da copa
