@@ -114,6 +114,41 @@ void teclado(unsigned char tecla, int x, int y) {
         }
         break;
 
+        // Apagar o objeto atualmente selecionado
+    case '#':
+        if (!objetos.empty() && objetoSelecionado >= 0) {
+            cout << "Removendo objeto selecionado: " << objetoSelecionado << endl;
+            objetos.erase(objetos.begin() + objetoSelecionado);
+
+            if (objetos.empty()) {
+                objetoSelecionado = -1;
+            } else {
+                objetoSelecionado = objetoSelecionado % objetos.size();
+                objetos[objetoSelecionado]->setSelecionado(true);
+            }
+        } else {
+            cout << "Nenhum objeto para remover!" << endl;
+        }
+        break;
+
+        // Apagar o último objeto do vetor
+    case '@':
+        if (!objetos.empty()) {
+            cout << "Removendo o último objeto." << endl;
+            objetos.pop_back();
+
+            // Ajustar o índice da seleção após a remoção
+            if (objetos.empty()) {
+                objetoSelecionado = -1;
+            } else if (objetoSelecionado >= (int)objetos.size()) {
+                objetoSelecionado = objetos.size() - 1;
+                objetos[objetoSelecionado]->setSelecionado(true);
+            }
+        } else {
+            cout << "Nenhum objeto no vetor para remover!" << endl;
+        }
+        break;
+
         // Alternar exibição dos eixos do objeto ativo
     case 'e':
         if (obj) {
@@ -154,7 +189,7 @@ void teclado(unsigned char tecla, int x, int y) {
 }
 
 int main() {
-    cout << "App Ok." << endl;
+    cout << "Iniciando o sistema com teclas # e @ para remoção." << endl;
 
     GUI gui = GUI(800, 600, desenhar, teclado);
 
