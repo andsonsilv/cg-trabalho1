@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <memory>
 #include <objetos/arvoresimples.h>
 #include <objetos/arvorecomplexa.h>
 #include <GL/glut.h>
@@ -8,20 +10,11 @@ using namespace std;
 
 Vetor3D posicaoLuz = Vetor3D(1.0, 1.5, 1.0);
 
-// Árvores conforme o padrão fornecido
-ArvoreSimples minhaArvore(1.0, 0.0, 0.0,
-                          1.2, 0.2,
-                          0.5, 0.3,
-                          0.55, 0.27, 0.07,
-                          0.0, 0.8, 0.0);
+// Vetor dinâmico de objetos
+vector<unique_ptr<Objeto>> objetos;
 
-ArvoreComplexa minhaArvoreComplexa(2.0, 0.0, 0.0,
-                                   1.0, 0.25,
-                                   0.8, 0.35,
-                                   0.6, 0.3, 0.1,
-                                   0.0, 0.7, 0.0);
-
-bool selecionaArvoreSimples = true;
+// Índice do objeto atualmente selecionado
+int objetoSelecionado = -1;
 
 void desenhar() {
     GUI::displayInit();
@@ -29,25 +22,17 @@ void desenhar() {
     GUI::drawOrigin(1.0);
     GUI::drawFloor();
 
-    glPushMatrix();
-    // Translada, rotaciona e escala a árvore simples
-    glTranslatef(minhaArvore.translacaoX, minhaArvore.translacaoY, minhaArvore.translacaoZ);
-    glRotatef(minhaArvore.rotacaoX, 1, 0, 0);
-    glRotatef(minhaArvore.rotacaoY, 0, 1, 0);
-    glRotatef(minhaArvore.rotacaoZ, 0, 0, 1);
-    glScalef(minhaArvore.escalaX, minhaArvore.escalaY, minhaArvore.escalaZ);
-    minhaArvore.desenhar();
-    glPopMatrix();
-
-    glPushMatrix();
-    // Translada, rotaciona e escala a árvore complexa
-    glTranslatef(minhaArvoreComplexa.translacaoX, minhaArvoreComplexa.translacaoY, minhaArvoreComplexa.translacaoZ);
-    glRotatef(minhaArvoreComplexa.rotacaoX, 1, 0, 0);
-    glRotatef(minhaArvoreComplexa.rotacaoY, 0, 1, 0);
-    glRotatef(minhaArvoreComplexa.rotacaoZ, 0, 0, 1);
-    glScalef(minhaArvoreComplexa.escalaX, minhaArvoreComplexa.escalaY, minhaArvoreComplexa.escalaZ);
-    minhaArvoreComplexa.desenhar();
-    glPopMatrix();
+    // Desenhar todos os objetos no vetor
+    for (auto& obj : objetos) {
+        glPushMatrix();
+        glTranslatef(obj->translacaoX, obj->translacaoY, obj->translacaoZ);
+        glRotatef(obj->rotacaoX, 1, 0, 0);
+        glRotatef(obj->rotacaoY, 0, 1, 0);
+        glRotatef(obj->rotacaoZ, 0, 0, 1);
+        glScalef(obj->escalaX, obj->escalaY, obj->escalaZ);
+        obj->desenhar();
+        glPopMatrix();
+    }
 
     GUI::displayEnd();
 }
@@ -55,48 +40,95 @@ void desenhar() {
 void teclado(unsigned char tecla, int x, int y) {
     GUI::keyInit(tecla, x, y);
 
-    // Define o objeto ativo para transformar
-    Objeto* obj = selecionaArvoreSimples ? (Objeto*)&minhaArvore : (Objeto*)&minhaArvoreComplexa;
+    // Objeto ativo
+    Objeto* obj = (objetoSelecionado >= 0) ? objetos[objetoSelecionado].get() : nullptr;
 
     switch (tecla) {
-    // Alternar entre as árvores
+    // Incluir nova ArvoreSimples
+    case '1': {
+        ArvoreSimples* novaArvore = new ArvoreSimples(
+            0.0f, 0.0f, 0.0f,    // Posição inicial (origem)
+            1.2f, 0.2f,          // Altura e largura do tronco
+            0.5f, 0.3f,          // Altura e raio da copa
+            0.55f, 0.27f, 0.07f, // Cor do tronco
+            0.0f, 0.8f, 0.0f     // Cor da copa
+            );
+        novaArvore->setSelecionado(true);
+        novaArvore->setMostrarEixos(false); // Eixos inicialmente ocultos
+
+        // Deselecionar o objeto anterior
+        if (objetoSelecionado >= 0) {
+            objetos[objetoSelecionado]->setSelecionado(false);
+        }
+
+        // Adicionar o novo objeto e atualizar o índice
+        objetos.push_back(unique_ptr<Objeto>(novaArvore));
+        objetoSelecionado = objetos.size() - 1;
+
+        cout << "Nova ArvoreSimples adicionada na origem." << endl;
+        break;
+    }
+
+        // Incluir nova ArvoreComplexa
+    case '2': {
+        ArvoreComplexa* novaArvore = new ArvoreComplexa(
+            0.0f, 0.0f, 0.0f,    // Posição inicial (origem)
+            1.0f, 0.25f,         // Altura e largura do tronco
+            0.8f, 0.35f,         // Altura e raio da copa
+            0.6f, 0.3f, 0.1f,    // Cor do tronco
+            0.0f, 0.7f, 0.0f     // Cor da copa
+            );
+        novaArvore->setSelecionado(true);
+        novaArvore->setMostrarEixos(false); // Eixos inicialmente ocultos
+
+        // Deselecionar o objeto anterior
+        if (objetoSelecionado >= 0) {
+            objetos[objetoSelecionado]->setSelecionado(false);
+        }
+
+        // Adicionar o novo objeto e atualizar o índice
+        objetos.push_back(unique_ptr<Objeto>(novaArvore));
+        objetoSelecionado = objetos.size() - 1;
+
+        cout << "Nova ArvoreComplexa adicionada na origem." << endl;
+        break;
+    }
+
+        // Trocar para o próximo objeto
     case 't':
-        if (selecionaArvoreSimples) {
-            minhaArvore.setSelecionado(false);
-            minhaArvoreComplexa.setSelecionado(true);
-            selecionaArvoreSimples = false;
-            cout << "Selecionada: Arvore Complexa" << endl;
-        } else {
-            minhaArvoreComplexa.setSelecionado(false);
-            minhaArvore.setSelecionado(true);
-            selecionaArvoreSimples = true;
-            cout << "Selecionada: Arvore Simples" << endl;
+        if (!objetos.empty()) {
+            objetos[objetoSelecionado]->setSelecionado(false);
+            objetoSelecionado = (objetoSelecionado + 1) % objetos.size();
+            objetos[objetoSelecionado]->setSelecionado(true);
+            cout << "Trocando para o próximo objeto." << endl;
         }
         break;
 
         // Alternar exibição dos eixos do objeto ativo
     case 'e':
-        obj->setMostrarEixos(!obj->mostrarEixos);
-        cout << "Exibição dos eixos: " << (obj->mostrarEixos ? "Ativada" : "Desativada") << endl;
+        if (obj) {
+            obj->setMostrarEixos(!obj->mostrarEixos);
+            cout << "Eixos " << (obj->mostrarEixos ? "mostrados" : "ocultos") << "." << endl;
+        }
         break;
 
         // Movimentação
-    case 'w': obj->mover(0, 0.1, 0); break;
-    case 's': obj->mover(0, -0.1, 0); break;
-    case 'a': obj->mover(-0.1, 0, 0); break;
-    case 'd': obj->mover(0.1, 0, 0); break;
+    case 'w': if (obj) obj->mover(0, 0.1, 0); break;
+    case 's': if (obj) obj->mover(0, -0.1, 0); break;
+    case 'a': if (obj) obj->mover(-0.1, 0, 0); break;
+    case 'd': if (obj) obj->mover(0.1, 0, 0); break;
 
         // Rotação
-    case 'i': obj->rotacionar(5, 0, 0); break;
-    case 'k': obj->rotacionar(-5, 0, 0); break;
-    case 'j': obj->rotacionar(0, 5, 0); break;
-    case 'l': obj->rotacionar(0, -5, 0); break;
-    case 'u': obj->rotacionar(0, 0, 5); break;
-    case 'o': obj->rotacionar(0, 0, -5); break;
+    case 'i': if (obj) obj->rotacionar(5, 0, 0); break;
+    case 'k': if (obj) obj->rotacionar(-5, 0, 0); break;
+    case 'j': if (obj) obj->rotacionar(0, 5, 0); break;
+    case 'l': if (obj) obj->rotacionar(0, -5, 0); break;
+    case 'u': if (obj) obj->rotacionar(0, 0, 5); break;
+    case 'o': if (obj) obj->rotacionar(0, 0, -5); break;
 
         // Escala
-    case '+': obj->escalar(1.1, 1.1, 1.1); break;
-    case '-': obj->escalar(0.9, 0.9, 0.9); break;
+    case '+': if (obj) obj->escalar(1.1, 1.1, 1.1); break;
+    case '-': if (obj) obj->escalar(0.9, 0.9, 0.9); break;
 
         // Movimentação da luz
     case '4': posicaoLuz.x -= 0.2; break;
@@ -112,9 +144,7 @@ void teclado(unsigned char tecla, int x, int y) {
 }
 
 int main() {
-    // Inicia com a árvore simples selecionada
-    minhaArvore.setSelecionado(true);
-    cout << "Iniciando o sistema com árvores e transformações." << endl;
+    cout << "Iniciando o sistema com suporte à inserção dinâmica de objetos." << endl;
 
     GUI gui = GUI(800, 600, desenhar, teclado);
 
