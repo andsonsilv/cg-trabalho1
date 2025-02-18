@@ -54,7 +54,7 @@ void teclado(unsigned char tecla, int x, int y) {
             0.0f, 0.8f, 0.0f     // Cor da copa
             );
         novaArvore->setSelecionado(true);
-        novaArvore->setMostrarEixos(false); // Eixos inicialmente ocultos
+        novaArvore->setMostrarEixos(false);
 
         // Deselecionar o objeto anterior
         if (objetoSelecionado >= 0) {
@@ -79,7 +79,7 @@ void teclado(unsigned char tecla, int x, int y) {
             0.0f, 0.7f, 0.0f     // Cor da copa
             );
         novaArvore->setSelecionado(true);
-        novaArvore->setMostrarEixos(false); // Eixos inicialmente ocultos
+        novaArvore->setMostrarEixos(false);
 
         // Deselecionar o objeto anterior
         if (objetoSelecionado >= 0) {
@@ -94,13 +94,23 @@ void teclado(unsigned char tecla, int x, int y) {
         break;
     }
 
-        // Trocar para o próximo objeto
-    case 't':
+        // Alternar para o próximo objeto (avançar)
+    case 'n':
         if (!objetos.empty()) {
             objetos[objetoSelecionado]->setSelecionado(false);
             objetoSelecionado = (objetoSelecionado + 1) % objetos.size();
             objetos[objetoSelecionado]->setSelecionado(true);
-            cout << "Trocando para o próximo objeto." << endl;
+            cout << "Selecionado próximo objeto." << endl;
+        }
+        break;
+
+        // Alternar para o objeto anterior (retroceder)
+    case 'b':
+        if (!objetos.empty()) {
+            objetos[objetoSelecionado]->setSelecionado(false);
+            objetoSelecionado = (objetoSelecionado - 1 + objetos.size()) % objetos.size();
+            objetos[objetoSelecionado]->setSelecionado(true);
+            cout << "Selecionado objeto anterior." << endl;
         }
         break;
 
@@ -144,7 +154,7 @@ void teclado(unsigned char tecla, int x, int y) {
 }
 
 int main() {
-    cout << "Iniciando o sistema com suporte à inserção dinâmica de objetos." << endl;
+    cout << "App Ok." << endl;
 
     GUI gui = GUI(800, 600, desenhar, teclado);
 
