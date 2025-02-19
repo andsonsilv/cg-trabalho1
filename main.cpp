@@ -147,7 +147,7 @@ void teclado(unsigned char tecla, int x, int y) {
                 obj->setMostrarEixos(false);
             }
         }
-        cout << "🔄 Exibição dos eixos globais: "
+        cout << "Exibição dos eixos globais: "
              << (mostrarTodosEixos ? "ATIVADA" : "DESATIVADA") << endl;
         break;
 
