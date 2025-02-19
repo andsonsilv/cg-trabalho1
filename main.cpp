@@ -16,6 +16,7 @@ vector<unique_ptr<Objeto>> objetos;
 // Índice do objeto atualmente selecionado
 int objetoSelecionado = -1;
 
+
 void desenhar() {
     GUI::displayInit();
     GUI::setLight(0, posicaoLuz.x, posicaoLuz.y, posicaoLuz.z, true, false);
@@ -32,6 +33,16 @@ void desenhar() {
         glScalef(obj->escalaX, obj->escalaY, obj->escalaZ);
         obj->desenhar();
         glPopMatrix();
+    }
+
+    if (objetoSelecionado >= 0) {
+        auto& obj = objetos[objetoSelecionado];
+
+        // Aplicar escala conforme o scroll do mouse
+        float scaleFactor = 1.0 + glutGUI::dsx;
+        obj->escalaX *= scaleFactor;
+        obj->escalaY *= scaleFactor;
+        obj->escalaZ *= scaleFactor;
     }
 
     GUI::displayEnd();
@@ -188,10 +199,14 @@ void teclado(unsigned char tecla, int x, int y) {
     }
 }
 
+
+
+
 int main() {
     cout << "Iniciando o sistema com teclas # e @ para remoção." << endl;
 
     GUI gui = GUI(800, 600, desenhar, teclado);
+
 
     return 0;
 }

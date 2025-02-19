@@ -455,38 +455,35 @@ void glutGUI::defaultMouseButton(int button, int state, int x, int y) {
     dly = 0.0; dlx = 0.0; dlrx = 0.0;
     dmx = 0.0; dmy = 0.0; dlmy = 0.0;
 
-    // if the left button is pressed
+    // Captura eventos do scroll do mouse
+    if (button == 3) { // Scroll para cima
+        dsx = dsy = dsz = 0.02;  // Aumenta 2% da escala
+    }
+    if (button == 4) { // Scroll para baixo
+        dsx = dsy = dsz = -0.02; // Diminui 2% da escala
+    }
+
+    // Botão esquerdo do mouse
     if (button == GLUT_LEFT_BUTTON) {
-        // when the button is pressed
         if (state == GLUT_DOWN) {
             lbpressed = true;
-            //            //picking
-            //            int pick = picking( x, y, 5, 5 );
-            //            if (pick == 0)
-            //              lbpressed = true;
-            //            else
-            //              objeto_selecionado = pick;
-        } else {// state = GLUT_UP
+        } else {
             lbpressed = false;
         }
     }
-    // if the middle button is pressed
+    // Botão do meio do mouse
     if (button == GLUT_MIDDLE_BUTTON) {
-        // when the button is pressed
         if (state == GLUT_DOWN) {
             mbpressed = true;
-        } else {// state = GLUT_UP
+        } else {
             mbpressed = false;
         }
     }
-    // if the left button is pressed
+    // Botão direito do mouse
     if (button == GLUT_RIGHT_BUTTON) {
-        // when the button is pressed
         if (state == GLUT_DOWN) {
             rbpressed = true;
-            //picking
-            //            objeto_selecionado = 0;
-        } else {// state = GLUT_UP
+        } else {
             rbpressed = false;
         }
     }
