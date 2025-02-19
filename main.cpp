@@ -25,22 +25,15 @@ void desenhar() {
 
     // Desenhar todos os objetos no vetor
     for (size_t i = 0; i < objetos.size(); i++) {
-        auto& obj = objetos[i];  // `obj` agora é um unique_ptr<Objeto>
+        auto& obj = objetos[i];
         glPushMatrix();
 
         // 📌 Se for o objeto selecionado, aplicar interações do mouse
-        if ((int)i == objetoSelecionado) { // Garantia de compatibilidade de tipos
-            // 🟢 Debug: Exibir valores do mouse no console
-            std::cout << "Mouse - drx: " << glutGUI::drx
-                      << ", dry: " << glutGUI::dry
-                      << ", dlrx: " << glutGUI::dlrx << std::endl;
-
-            // 🔹 Translação ao arrastar com o botão direito do mouse
-            if (glutGUI::rbpressed) {
-                obj->translacaoX += glutGUI::drx * 0.5;
-                obj->translacaoY += glutGUI::dry * 0.5;
-                obj->translacaoZ += glutGUI::dlry * 0.5;
-            }
+        if ((int)i == objetoSelecionado) {
+            obj->rotacaoX += glutGUI::dax * 5.0;
+            obj->rotacaoY += glutGUI::day * 5.0;
+            obj->translacaoX += glutGUI::drx * 0.5;
+            obj->translacaoY += glutGUI::dry * 0.5;
         }
 
         // Aplicar transformações ao objeto
@@ -225,7 +218,7 @@ void teclado(unsigned char tecla, int x, int y) {
 
 
 int main() {
-    cout << "Iniciando o sistema com teclas # e @ para remoção." << endl;
+    cout << "Transformacoes Mouse" << endl;
 
     GUI gui = GUI(800, 600, desenhar, teclado);
 

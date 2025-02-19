@@ -467,8 +467,10 @@ void glutGUI::defaultMouseButton(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON) {
         if (state == GLUT_DOWN) {
             lbpressed = true;
+            trans_obj = true;
         } else {
             lbpressed = false;
+            trans_obj = false;
         }
     }
     // Botão do meio do mouse
@@ -523,18 +525,22 @@ void glutGUI::mouseMove(int x, int y) {
     float fator = 10.0;
     if (lbpressed && !rbpressed && !mbpressed) {
         if (!trans_obj && (!trans_luz || !obj_transp)) {
-            cam->rotatex(y,last_y);
-            cam->rotatey(x,last_x);
+            cam->rotatex(y, last_y);
+            cam->rotatey(x, last_x);
         }
+
         if (trans_obj) {
-            dly = dax = (y - last_y)/fator;
-            dlx = day = (x - last_x)/fator;
+            glutGUI::dax = (y - last_y) / fator;  // Rotação no eixo X
+            glutGUI::day = (x - last_x) / fator;  // Rotação no eixo Y
+            glutGUI::daz = 0.0; // Inicialmente sem rotação no eixo Z
+
             ax += dax;
             ay += day;
         }
+
         if (trans_luz && obj_transp) {
             fator = 100.0;
-            transparencia -= (y - last_y)/fator;
+            transparencia -= (y - last_y) / fator;
             if (transparencia < 0.0) transparencia = 0.0;
             if (transparencia > 1.0) transparencia = 1.0;
         }
