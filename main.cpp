@@ -17,6 +17,8 @@ vector<unique_ptr<Objeto>> objetos;
 // Índice do objeto atualmente selecionado
 int objetoSelecionado = -1;
 
+// Controle global da exibição dos eixos para todos os objetos
+bool mostrarTodosEixos = false;
 
 void desenhar() {
     GUI::displayInit();
@@ -24,12 +26,10 @@ void desenhar() {
     GUI::drawOrigin(1.0);
     GUI::drawFloor();
 
-    // Desenhar todos os objetos no vetor
     for (size_t i = 0; i < objetos.size(); i++) {
         auto& obj = objetos[i];
         glPushMatrix();
 
-        // 📌 Se for o objeto selecionado, aplicar interações do mouse
         if ((int)i == objetoSelecionado) {
             obj->rotacaoX += glutGUI::dax * 5.0;
             obj->rotacaoY += glutGUI::day * 5.0;
@@ -44,12 +44,15 @@ void desenhar() {
         glRotatef(obj->rotacaoZ, 0, 0, 1);
         glScalef(obj->escalaX, obj->escalaY, obj->escalaZ);
 
-        obj->desenhar();
+        // Respeitar a exibição global dos eixos
+        if (mostrarTodosEixos) {
+            obj->setMostrarEixos(true);
+        }
 
+        obj->desenhar();
         glPopMatrix();
     }
 
-    // Se houver um objeto selecionado, aplicar escala conforme o scroll do mouse
     if (objetoSelecionado >= 0) {
         auto& obj = objetos[objetoSelecionado];
         float scaleFactor = 1.0 + glutGUI::dsx;
@@ -61,9 +64,6 @@ void desenhar() {
     GUI::displayEnd();
 }
 
-
-
-
 void teclado(unsigned char tecla, int x, int y) {
     GUI::keyInit(tecla, x, y);
 
@@ -73,55 +73,45 @@ void teclado(unsigned char tecla, int x, int y) {
     switch (tecla) {
     // Incluir nova ArvoreSimples
     case '1': {
-        ArvoreSimples* novaArvore = new ArvoreSimples(
-            0.0f, 0.0f, 0.0f,    // Posição inicial (origem)
-            1.2f, 0.2f,          // Altura e largura do tronco
-            0.5f, 0.3f,          // Altura e raio da copa
-            0.55f, 0.27f, 0.07f, // Cor do tronco
-            0.0f, 0.8f, 0.0f     // Cor da copa
+        auto novaArvore = make_unique<ArvoreSimples>(
+            0.0f, 0.0f, 0.0f, 1.2f, 0.2f, 0.5f, 0.3f,
+            0.55f, 0.27f, 0.07f, 0.0f, 0.8f, 0.0f
             );
         novaArvore->setSelecionado(true);
         novaArvore->setMostrarEixos(false);
 
-        // Deselecionar o objeto anterior
         if (objetoSelecionado >= 0) {
             objetos[objetoSelecionado]->setSelecionado(false);
         }
 
-        // Adicionar o novo objeto e atualizar o índice
-        objetos.push_back(unique_ptr<Objeto>(novaArvore));
+        objetos.push_back(move(novaArvore));
         objetoSelecionado = objetos.size() - 1;
 
-        cout << "Nova ArvoreSimples adicionada na origem." << endl;
+        cout << "Nova ArvoreSimples adicionada." << endl;
         break;
     }
 
         // Incluir nova ArvoreComplexa
     case '2': {
-        ArvoreComplexa* novaArvore = new ArvoreComplexa(
-            0.0f, 0.0f, 0.0f,    // Posição inicial (origem)
-            1.0f, 0.25f,         // Altura e largura do tronco
-            0.8f, 0.35f,         // Altura e raio da copa
-            0.6f, 0.3f, 0.1f,    // Cor do tronco
-            0.0f, 0.7f, 0.0f     // Cor da copa
+        auto novaArvore = make_unique<ArvoreComplexa>(
+            0.0f, 0.0f, 0.0f, 1.0f, 0.25f, 0.8f, 0.35f,
+            0.6f, 0.3f, 0.1f, 0.0f, 0.7f, 0.0f
             );
         novaArvore->setSelecionado(true);
         novaArvore->setMostrarEixos(false);
 
-        // Deselecionar o objeto anterior
         if (objetoSelecionado >= 0) {
             objetos[objetoSelecionado]->setSelecionado(false);
         }
 
-        // Adicionar o novo objeto e atualizar o índice
-        objetos.push_back(unique_ptr<Objeto>(novaArvore));
+        objetos.push_back(move(novaArvore));
         objetoSelecionado = objetos.size() - 1;
 
-        cout << "Nova ArvoreComplexa adicionada na origem." << endl;
+        cout << "Nova ArvoreComplexa adicionada." << endl;
         break;
     }
 
-        // Alternar para o próximo objeto (avançar)
+        // Alternar para o próximo objeto
     case 'n':
         if (!objetos.empty()) {
             objetos[objetoSelecionado]->setSelecionado(false);
@@ -131,7 +121,7 @@ void teclado(unsigned char tecla, int x, int y) {
         }
         break;
 
-        // Alternar para o objeto anterior (retroceder)
+        // Alternar para o objeto anterior
     case 'b':
         if (!objetos.empty()) {
             objetos[objetoSelecionado]->setSelecionado(false);
@@ -141,7 +131,46 @@ void teclado(unsigned char tecla, int x, int y) {
         }
         break;
 
-        // Apagar o objeto atualmente selecionado
+        // Exibição de eixos
+    case 'E': // Alternar exibição dos eixos do objeto selecionado
+        if (obj) {
+            obj->setMostrarEixos(!obj->mostrarEixos);
+            cout << "Eixos do objeto " << objetoSelecionado << " "
+                 << (obj->mostrarEixos ? "MOSTRADOS" : "OCULTOS") << "." << endl;
+        }
+        break;
+
+    case 'T': // Ativar/Desativar exibição dos eixos de TODOS os objetos
+        mostrarTodosEixos = !mostrarTodosEixos;
+        if (!mostrarTodosEixos) {
+            for (auto& obj : objetos) {
+                obj->setMostrarEixos(false);
+            }
+        }
+        cout << "🔄 Exibição dos eixos globais: "
+             << (mostrarTodosEixos ? "ATIVADA" : "DESATIVADA") << endl;
+        break;
+
+        // Movimentação
+    case 'w': if (obj) obj->mover(0, 0.1, 0); break;
+    case 's': if (obj) obj->mover(0, -0.1, 0); break;
+    case 'a': if (obj) obj->mover(-0.1, 0, 0); break;
+    case 'd': if (obj) obj->mover(0.1, 0, 0); break;
+    case 'r': if (obj) obj->mover(0, 0, 0.1); break; // Movimenta no eixo Z para frente
+    case 'f': if (obj) obj->mover(0, 0, -0.1); break; // Movimenta no eixo Z para trás
+
+        // Rotação
+    case 'i': if (obj) obj->rotacionar(5, 0, 0); break;
+    case 'k': if (obj) obj->rotacionar(-5, 0, 0); break;
+    case 'j': if (obj) obj->rotacionar(0, 5, 0); break;
+    case 'l': if (obj) obj->rotacionar(0, -5, 0); break;
+    case 'u': if (obj) obj->rotacionar(0, 0, 5); break;
+    case 'h': if (obj) obj->rotacionar(0, 0, -5); break;
+
+        // Escala
+    case '+': if (obj) obj->escalar(1.1, 1.1, 1.1); break;
+    case '-': if (obj) obj->escalar(0.9, 0.9, 0.9); break;
+
     case '#':
         if (!objetos.empty() && objetoSelecionado >= 0) {
             cout << "Removendo objeto selecionado: " << objetoSelecionado << endl;
@@ -176,46 +205,12 @@ void teclado(unsigned char tecla, int x, int y) {
         }
         break;
 
-        // Alternar exibição dos eixos do objeto ativo
-    case 'e':
-        if (obj) {
-            obj->setMostrarEixos(!obj->mostrarEixos);
-            cout << "Eixos " << (obj->mostrarEixos ? "mostrados" : "ocultos") << "." << endl;
-        }
+        // Salvar e carregar objetos
+    case '$':
+        GerenciadorArquivo::salvarObjetos(objetos);
         break;
-
-        // Movimentação
-    case 'w': if (obj) obj->mover(0, 0.1, 0); break;
-    case 's': if (obj) obj->mover(0, -0.1, 0); break;
-    case 'a': if (obj) obj->mover(-0.1, 0, 0); break;
-    case 'd': if (obj) obj->mover(0.1, 0, 0); break;
-
-        // Rotação
-    case 'i': if (obj) obj->rotacionar(5, 0, 0); break;
-    case 'k': if (obj) obj->rotacionar(-5, 0, 0); break;
-    case 'j': if (obj) obj->rotacionar(0, 5, 0); break;
-    case 'l': if (obj) obj->rotacionar(0, -5, 0); break;
-    case 'u': if (obj) obj->rotacionar(0, 0, 5); break;
-    case 'o': if (obj) obj->rotacionar(0, 0, -5); break;
-
-        // Escala
-    case '+': if (obj) obj->escalar(1.1, 1.1, 1.1); break;
-    case '-': if (obj) obj->escalar(0.9, 0.9, 0.9); break;
-
-        // Movimentação da luz
-    case '4': posicaoLuz.x -= 0.2; break;
-    case '6': posicaoLuz.x += 0.2; break;
-    case '5': posicaoLuz.y -= 0.2; break;
-    case '8': posicaoLuz.y += 0.2; break;
-    case '[': posicaoLuz.z -= 0.2; break;
-    case ']': posicaoLuz.z += 0.2; break;
-
-    case '$': // Salvar objetos
-        GerenciadorArquivo::salvarObjetos(objetos, "objetos.json");
-        break;
-
-    case '%': // Carregar objetos
-        GerenciadorArquivo::carregarObjetos(objetos, "objetos.json");
+    case '%':
+        GerenciadorArquivo::carregarObjetos(objetos, objetoSelecionado);
         break;
 
     default:
@@ -223,14 +218,8 @@ void teclado(unsigned char tecla, int x, int y) {
     }
 }
 
-
-
-
 int main() {
-    cout << "Trabalhando com arquivos" << endl;
-
+    cout << "Trabalho 1 - Andson" << endl;
     GUI gui = GUI(800, 600, desenhar, teclado);
-
-
     return 0;
 }

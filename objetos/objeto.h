@@ -50,12 +50,8 @@ public:
     }
 
     virtual void desenhar() = 0;
-
-    // 🔥 Métodos obrigatórios para serialização JSON
     virtual json toJSON() const = 0;
     virtual void fromJSON(const json& j) = 0;
-
-    // 🔥 Método para identificar o tipo do objeto (deve ser implementado nas subclasses)
     virtual std::string getTipo() const = 0;
 };
 

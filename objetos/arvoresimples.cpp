@@ -70,11 +70,11 @@ void ArvoreSimples::desenhar() {
               selecionado ? 1.0 : corTroncoB);
 
 
-    // ----- Desenho do Tronco com Espessura -----
+    // Desenho do Tronco com Espessura
     float profundidadeTronco = 0.5f * larguraTronco;
     desenharTroncoComEspessura(larguraTronco, alturaTronco, profundidadeTronco);
 
-    // ----- Desenho da Copa com glPolygonOffset para evitar conflito -----
+    // Desenho da Copa com glPolygonOffset para evitar conflito
     // Translada para o topo do tronco
     glTranslatef(0.0f, alturaTronco, 0.0f);
 

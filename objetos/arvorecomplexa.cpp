@@ -69,11 +69,11 @@ void ArvoreComplexa::desenhar() {
               selecionado ? 1.0 : corTroncoG,
               selecionado ? 1.0 : corTroncoB);
 
-    // ----- Desenho do Tronco com Espessura -----
+    // Desenho do Tronco com Espessura
     float profundidadeTronco = 0.5f * larguraTronco;
     desenharTroncoComEspessura(larguraTronco, alturaTronco, profundidadeTronco);
 
-    // ----- Desenho da Copa com Espessura -----
+    // Desenho da Copa com Espessura
     glTranslatef(0.0f, alturaTronco, 0.0f);
 
     glColor3f(selecionado ? 1.0 : corCopaR,

@@ -16,7 +16,7 @@ public:
 
     virtual void desenhar() override;
 
-    static void desenharTroncoComEspessura(float largura, float altura, float profundidade);
+    void desenharTroncoComEspessura(float largura, float altura, float profundidade);
 
     std::string getTipo() const override {
         return "ArvoreSimples";
