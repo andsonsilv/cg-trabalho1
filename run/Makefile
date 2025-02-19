@@ -16,7 +16,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_QML_DEBUG
 CFLAGS        = -pipe -g -Wall -Wextra -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -Wextra -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -g -std=gnu++1y -Wall -Wextra -fPIC $(DEFINES)
 INCPATH       = -I../../cg-trabalho1 -I. -I../bib -I../gui_glut -Itrab1 -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
@@ -63,7 +63,8 @@ SOURCES       = ../main.cpp \
 		../gui_glut/gui.cpp \
 		../gui_glut/OpenTextures.cpp \
 		../objetos/arvorecomplexa.cpp \
-		../objetos/arvoresimples.cpp 
+		../objetos/arvoresimples.cpp \
+		../objetos/gerenciadorarquivo.cpp 
 OBJECTS       = main.o \
 		Camera.o \
 		CameraDistante.o \
@@ -75,7 +76,8 @@ OBJECTS       = main.o \
 		gui.o \
 		OpenTextures.o \
 		arvorecomplexa.o \
-		arvoresimples.o
+		arvoresimples.o \
+		gerenciadorarquivo.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -159,6 +161,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		objetos/arvore.h \
 		objetos/arvorecomplexa.h \
 		objetos/arvoresimples.h \
+		objetos/gerenciadorarquivo.h \
 		objetos/objeto.h ../main.cpp \
 		../bib/Camera.cpp \
 		../bib/CameraDistante.cpp \
@@ -170,7 +173,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../gui_glut/gui.cpp \
 		../gui_glut/OpenTextures.cpp \
 		../objetos/arvorecomplexa.cpp \
-		../objetos/arvoresimples.cpp
+		../objetos/arvoresimples.cpp \
+		../objetos/gerenciadorarquivo.cpp
 QMAKE_TARGET  = GLUTdoZero
 DESTDIR       = 
 TARGET        = GLUTdoZero
@@ -381,7 +385,8 @@ main.o: ../main.cpp ../objetos/arvoresimples.h \
 		../bib/Vetor3D.h \
 		../bib/CameraJogo.h \
 		../bib/Desenha.h \
-		../bib/model3ds.h
+		../bib/model3ds.h \
+		../objetos/gerenciadorarquivo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
 Camera.o: ../bib/Camera.cpp ../bib/Camera.h \
@@ -439,6 +444,13 @@ arvoresimples.o: ../objetos/arvoresimples.cpp ../objetos/arvoresimples.h \
 		../objetos/arvore.h \
 		../objetos/objeto.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arvoresimples.o ../objetos/arvoresimples.cpp
+
+gerenciadorarquivo.o: ../objetos/gerenciadorarquivo.cpp ../objetos/gerenciadorarquivo.h \
+		../objetos/objeto.h \
+		../objetos/arvoresimples.h \
+		../objetos/arvore.h \
+		../objetos/arvorecomplexa.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gerenciadorarquivo.o ../objetos/gerenciadorarquivo.cpp
 
 ####### Install
 

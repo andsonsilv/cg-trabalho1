@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += console c++11
+CONFIG += console c++14
 CONFIG -= app_bundle
 CONFIG -= qt
 
@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     gui_glut/gui.cpp \
     gui_glut/OpenTextures.cpp \
     objetos/arvorecomplexa.cpp \
-    objetos/arvoresimples.cpp
+    objetos/arvoresimples.cpp \
+    objetos/gerenciadorarquivo.cpp
 
 HEADERS += \
     bib/Camera.h \
@@ -35,4 +36,5 @@ HEADERS += \
     objetos/arvore.h \
     objetos/arvorecomplexa.h \
     objetos/arvoresimples.h \
+    objetos/gerenciadorarquivo.h \
     objetos/objeto.h

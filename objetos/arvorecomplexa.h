@@ -4,6 +4,7 @@
 #include "arvore.h"
 #include <GL/glut.h>
 #include <math.h>
+#include <string>
 
 class ArvoreComplexa : public Arvore {
 public:
@@ -15,8 +16,37 @@ public:
 
     virtual void desenhar() override;
 
-private:
     void desenharTroncoComEspessura(float largura, float altura, float profundidade);
+
+    std::string getTipo() const override {
+        return "ArvoreComplexa";
+    }
+
+    json toJSON() const override {
+        return {
+            {"tipo", getTipo()},
+            {"translacao", {translacaoX, translacaoY, translacaoZ}},
+            {"rotacao", {rotacaoX, rotacaoY, rotacaoZ}},
+            {"escala", {escalaX, escalaY, escalaZ}},
+            {"selecionado", selecionado},
+            {"mostrarEixos", mostrarEixos}
+        };
+    }
+
+    void fromJSON(const json& j) override {
+        translacaoX = j["translacao"][0];
+        translacaoY = j["translacao"][1];
+        translacaoZ = j["translacao"][2];
+        rotacaoX = j["rotacao"][0];
+        rotacaoY = j["rotacao"][1];
+        rotacaoZ = j["rotacao"][2];
+        escalaX = j["escala"][0];
+        escalaY = j["escala"][1];
+        escalaZ = j["escala"][2];
+        selecionado = j["selecionado"];
+        mostrarEixos = j["mostrarEixos"];
+    }
+
 };
 
 #endif // ARVORE_COMPLEXA_H

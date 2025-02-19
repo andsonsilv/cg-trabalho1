@@ -5,6 +5,7 @@
 #include <objetos/arvorecomplexa.h>
 #include <GL/glut.h>
 #include <gui.h>
+#include <objetos/gerenciadorarquivo.h>
 
 using namespace std;
 
@@ -209,6 +210,14 @@ void teclado(unsigned char tecla, int x, int y) {
     case '[': posicaoLuz.z -= 0.2; break;
     case ']': posicaoLuz.z += 0.2; break;
 
+    case '$': // Salvar objetos
+        GerenciadorArquivo::salvarObjetos(objetos, "objetos.json");
+        break;
+
+    case '%': // Carregar objetos
+        GerenciadorArquivo::carregarObjetos(objetos, "objetos.json");
+        break;
+
     default:
         break;
     }
@@ -218,7 +227,7 @@ void teclado(unsigned char tecla, int x, int y) {
 
 
 int main() {
-    cout << "Transformacoes Mouse" << endl;
+    cout << "Trabalhando com arquivos" << endl;
 
     GUI gui = GUI(800, 600, desenhar, teclado);
 
