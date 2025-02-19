@@ -24,21 +24,40 @@ void desenhar() {
     GUI::drawFloor();
 
     // Desenhar todos os objetos no vetor
-    for (auto& obj : objetos) {
+    for (size_t i = 0; i < objetos.size(); i++) {
+        auto& obj = objetos[i];  // `obj` agora é um unique_ptr<Objeto>
         glPushMatrix();
+
+        // 📌 Se for o objeto selecionado, aplicar interações do mouse
+        if ((int)i == objetoSelecionado) { // Garantia de compatibilidade de tipos
+            // 🟢 Debug: Exibir valores do mouse no console
+            std::cout << "Mouse - drx: " << glutGUI::drx
+                      << ", dry: " << glutGUI::dry
+                      << ", dlrx: " << glutGUI::dlrx << std::endl;
+
+            // 🔹 Translação ao arrastar com o botão direito do mouse
+            if (glutGUI::rbpressed) {
+                obj->translacaoX += glutGUI::drx * 0.5;
+                obj->translacaoY += glutGUI::dry * 0.5;
+                obj->translacaoZ += glutGUI::dlry * 0.5;
+            }
+        }
+
+        // Aplicar transformações ao objeto
         glTranslatef(obj->translacaoX, obj->translacaoY, obj->translacaoZ);
         glRotatef(obj->rotacaoX, 1, 0, 0);
         glRotatef(obj->rotacaoY, 0, 1, 0);
         glRotatef(obj->rotacaoZ, 0, 0, 1);
         glScalef(obj->escalaX, obj->escalaY, obj->escalaZ);
+
         obj->desenhar();
+
         glPopMatrix();
     }
 
+    // Se houver um objeto selecionado, aplicar escala conforme o scroll do mouse
     if (objetoSelecionado >= 0) {
         auto& obj = objetos[objetoSelecionado];
-
-        // Aplicar escala conforme o scroll do mouse
         float scaleFactor = 1.0 + glutGUI::dsx;
         obj->escalaX *= scaleFactor;
         obj->escalaY *= scaleFactor;
@@ -47,6 +66,9 @@ void desenhar() {
 
     GUI::displayEnd();
 }
+
+
+
 
 void teclado(unsigned char tecla, int x, int y) {
     GUI::keyInit(tecla, x, y);

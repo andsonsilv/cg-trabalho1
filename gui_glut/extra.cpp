@@ -481,10 +481,14 @@ void glutGUI::defaultMouseButton(int button, int state, int x, int y) {
     }
     // Botão direito do mouse
     if (button == GLUT_RIGHT_BUTTON) {
-        if (state == GLUT_DOWN) {
-            rbpressed = true;
-        } else {
-            rbpressed = false;
+        if (button == GLUT_RIGHT_BUTTON) {
+            if (state == GLUT_DOWN) {
+                rbpressed = true;
+                trans_obj = true;  // 🔥 Ativa a translação quando o botão direito for pressionado
+            } else {
+                rbpressed = false;
+                trans_obj = false; // 🔥 Desativa quando o botão for solto
+            }
         }
     }
 
@@ -544,6 +548,7 @@ void glutGUI::mouseMove(int x, int y) {
         if (trans_obj) {
             drx = dtx = (x - last_x)/fator;
             dry = dty = -(y - last_y)/fator;
+            dlry = (y - last_y) / fator;
             tx += dtx;
             ty += dty;
         }
