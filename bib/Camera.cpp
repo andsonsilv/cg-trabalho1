@@ -103,21 +103,24 @@ void Camera::moverTras() {
     c = c - (direcao * 0.5);
 }
 
-void Camera::moverEsquerda() {
-    Vetor3D direcao = c - e;
-    Vetor3D esquerda = u.prodVetorial(direcao);
-    esquerda.normaliza();
-    e = e - (esquerda * 0.5);
-    c = c - (esquerda * 0.5);
-}
-
 void Camera::moverDireita() {
     Vetor3D direcao = c - e;
-    Vetor3D direita = direcao.prodVetorial(u);
+    Vetor3D esquerda = direcao.prodVetorial(u);
+    esquerda.normaliza();
+
+    e = e + (esquerda * 0.5);
+    c = c + (esquerda * 0.5);
+}
+
+void Camera::moverEsquerda() {
+    Vetor3D direcao = c - e;
+    Vetor3D direita = u.prodVetorial(direcao);
     direita.normaliza();
+
     e = e + (direita * 0.5);
     c = c + (direita * 0.5);
 }
+
 
 void Camera::subir() {
     e = e + (u * 0.5);
