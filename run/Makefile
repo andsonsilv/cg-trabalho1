@@ -57,6 +57,7 @@ SOURCES       = ../main.cpp \
 		../bib/CameraDistante.cpp \
 		../bib/CameraJogo.cpp \
 		../bib/Desenha.cpp \
+		../bib/gerenciadorcameras.cpp \
 		../bib/model3ds.cpp \
 		../bib/Vetor3D.cpp \
 		../gui_glut/extra.cpp \
@@ -70,6 +71,7 @@ OBJECTS       = main.o \
 		CameraDistante.o \
 		CameraJogo.o \
 		Desenha.o \
+		gerenciadorcameras.o \
 		model3ds.o \
 		Vetor3D.o \
 		extra.o \
@@ -153,6 +155,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		bib/CameraDistante.h \
 		bib/CameraJogo.h \
 		bib/Desenha.h \
+		bib/gerenciadorcameras.h \
 		bib/model3ds.h \
 		bib/Vetor3D.h \
 		gui_glut/extra.h \
@@ -167,6 +170,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../bib/CameraDistante.cpp \
 		../bib/CameraJogo.cpp \
 		../bib/Desenha.cpp \
+		../bib/gerenciadorcameras.cpp \
 		../bib/model3ds.cpp \
 		../bib/Vetor3D.cpp \
 		../gui_glut/extra.cpp \
@@ -386,7 +390,8 @@ main.o: ../main.cpp ../objetos/arvoresimples.h \
 		../bib/CameraJogo.h \
 		../bib/Desenha.h \
 		../bib/model3ds.h \
-		../objetos/gerenciadorarquivo.h
+		../objetos/gerenciadorarquivo.h \
+		../bib/gerenciadorcameras.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
 Camera.o: ../bib/Camera.cpp ../bib/Camera.h \
@@ -406,6 +411,13 @@ CameraJogo.o: ../bib/CameraJogo.cpp ../bib/CameraJogo.h \
 Desenha.o: ../bib/Desenha.cpp ../bib/Desenha.h \
 		../bib/Vetor3D.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Desenha.o ../bib/Desenha.cpp
+
+gerenciadorcameras.o: ../bib/gerenciadorcameras.cpp ../bib/gerenciadorcameras.h \
+		../bib/Camera.h \
+		../bib/Vetor3D.h \
+		../bib/CameraDistante.h \
+		../bib/CameraJogo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gerenciadorcameras.o ../bib/gerenciadorcameras.cpp
 
 model3ds.o: ../bib/model3ds.cpp ../bib/model3ds.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o model3ds.o ../bib/model3ds.cpp

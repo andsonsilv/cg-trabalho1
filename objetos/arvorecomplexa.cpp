@@ -81,7 +81,7 @@ void ArvoreComplexa::desenhar() {
               selecionado ? 1.0 : corCopaB);
 
     const int segments = 30;
-    float canopyThickness = 0.05f; // Espessura da copa
+    float canopyThickness = 0.15f; // Espessura da copa
 
     glBegin(GL_QUADS);
     for (int i = 0; i < segments; i++) {

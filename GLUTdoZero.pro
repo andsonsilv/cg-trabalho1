@@ -14,6 +14,7 @@ SOURCES += main.cpp \
     bib/CameraDistante.cpp \
     bib/CameraJogo.cpp \
     bib/Desenha.cpp \
+    bib/gerenciadorcameras.cpp \
     bib/model3ds.cpp \
     bib/Vetor3D.cpp \
     gui_glut/extra.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     bib/CameraDistante.h \
     bib/CameraJogo.h \
     bib/Desenha.h \
+    bib/gerenciadorcameras.h \
     bib/model3ds.h \
     bib/Vetor3D.h \
     gui_glut/extra.h \

@@ -1,1 +1,62 @@
-null
+[
+    {
+        "escala": [
+            0.9157497882843018,
+            0.9157497882843018,
+            0.9157497882843018
+        ],
+        "mostrarEixos": false,
+        "rotacao": [
+            28.0,
+            29.5,
+            0.0
+        ],
+        "selecionado": false,
+        "tipo": "ArvoreComplexa",
+        "translacao": [
+            1.0000001192092896,
+            0.10000000149011612,
+            0.9000000953674316
+        ]
+    },
+    {
+        "escala": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "mostrarEixos": false,
+        "rotacao": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "selecionado": true,
+        "tipo": "ArvoreSimples",
+        "translacao": [
+            -1.1000001430511475,
+            0.7000000476837158,
+            0.0
+        ]
+    },
+    {
+        "escala": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "mostrarEixos": false,
+        "rotacao": [
+            -14.5,
+            29.5,
+            0.0
+        ],
+        "selecionado": false,
+        "tipo": "ArvoreComplexa",
+        "translacao": [
+            1.0549997091293335,
+            1.5399993658065796,
+            0.0
+        ]
+    }
+]
