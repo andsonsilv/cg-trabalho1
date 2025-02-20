@@ -79,3 +79,53 @@ void Camera::adaptavetorcjogotodist(GLfloat r){
     c = e.soma(Vec.multiplicacao(r));
 }
 //---------------------------------------------------------------------------
+
+void Camera::posicionar() {
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    gluLookAt(e.x, e.y, e.z,  // Posição da câmera (eye)
+              c.x, c.y, c.z,  // Para onde a câmera está olhando (center)
+              u.x, u.y, u.z); // Direção "para cima" da câmera (up)
+}
+
+void Camera::moverFrente() {
+    Vetor3D direcao = c - e;
+    direcao.normaliza();
+    e = e + (direcao * 0.5);
+    c = c + (direcao * 0.5);
+}
+
+void Camera::moverTras() {
+    Vetor3D direcao = c - e;
+    direcao.normaliza();
+    e = e - (direcao * 0.5);
+    c = c - (direcao * 0.5);
+}
+
+void Camera::moverEsquerda() {
+    Vetor3D direcao = c - e;
+    Vetor3D esquerda = u.prodVetorial(direcao);
+    esquerda.normaliza();
+    e = e - (esquerda * 0.5);
+    c = c - (esquerda * 0.5);
+}
+
+void Camera::moverDireita() {
+    Vetor3D direcao = c - e;
+    Vetor3D direita = direcao.prodVetorial(u);
+    direita.normaliza();
+    e = e + (direita * 0.5);
+    c = c + (direita * 0.5);
+}
+
+void Camera::subir() {
+    e = e + (u * 0.5);
+    c = c + (u * 0.5);
+}
+
+void Camera::descer() {
+    e = e - (u * 0.5);
+    c = c - (u * 0.5);
+}
+

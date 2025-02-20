@@ -14,7 +14,8 @@ class CameraJogo : public Camera
       CameraJogo();
       CameraJogo(Vetor3D e, Vetor3D c, Vetor3D u);
       CameraJogo(GLfloat ex, GLfloat ey, GLfloat ez, GLfloat cx, GLfloat cy, GLfloat cz, GLfloat ux, GLfloat uy, GLfloat uz);
-      ~CameraJogo(){};
+      virtual ~CameraJogo() {}
+
       
       //vetor Vec e u sempre unitarios e perpendiculares
       virtual void zoom(GLfloat, GLfloat);

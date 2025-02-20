@@ -6,6 +6,10 @@
 #include <GL/glut.h>
 #include <gui.h>
 #include <objetos/gerenciadorarquivo.h>
+#include "bib/Camera.h"
+#include "bib/CameraDistante.h"
+#include "bib/CameraJogo.h"
+
 
 using namespace std;
 
@@ -17,11 +21,62 @@ vector<unique_ptr<Objeto>> objetos;
 // Índice do objeto atualmente selecionado
 int objetoSelecionado = -1;
 
+// Definição global da câmera
+unique_ptr<Camera> camera;
+
 // Controle global da exibição dos eixos para todos os objetos
 bool mostrarTodosEixos = false;
 
+// Índice da configuração de câmera atual
+int indiceCameraAtual = 0;
+
+struct CameraConfig {
+    string nome;
+    unique_ptr<Camera> cam;
+
+    CameraConfig(string nome, unique_ptr<Camera> cam)
+        : nome(move(nome)), cam(move(cam)) {}
+};
+
+// Lista de posições de câmera pré-definidas (usando teclas 3-8)
+vector<CameraConfig> configuracoesCamera;
+
+void alternarCamera(int novaCamera) {
+    if (novaCamera >= 0 && novaCamera < (int)configuracoesCamera.size()) {
+        indiceCameraAtual = novaCamera;
+
+        // Criar nova instância da câmera para evitar ponteiros inválidos
+        camera = make_unique<CameraDistante>(
+            configuracoesCamera[indiceCameraAtual].cam->e,
+            configuracoesCamera[indiceCameraAtual].cam->c,
+            configuracoesCamera[indiceCameraAtual].cam->u
+            );
+
+        camera->posicionar();
+        glutPostRedisplay();
+
+        cout << "📸 Mudando para câmera: " << configuracoesCamera[indiceCameraAtual].nome << endl;
+    }
+}
+
+void inicializarCameras() {
+    configuracoesCamera.emplace_back("Vista Aérea", make_unique<CameraDistante>(Vetor3D(0, 8, 15), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
+    configuracoesCamera.emplace_back("Lateral Esquerda", make_unique<CameraDistante>(Vetor3D(-10, 5, 5), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
+    configuracoesCamera.emplace_back("Lateral Direita", make_unique<CameraDistante>(Vetor3D(10, 5, 5), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
+    configuracoesCamera.emplace_back("Primeira Pessoa", make_unique<CameraJogo>(Vetor3D(0, 2, 5), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
+    configuracoesCamera.emplace_back("Traseira", make_unique<CameraJogo>(Vetor3D(0, 1, -5), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
+    configuracoesCamera.emplace_back("Vista de Baixo", make_unique<CameraJogo>(Vetor3D(0, -5, 0), Vetor3D(0, 1, 0), Vetor3D(0, 0, 1)));
+}
+
+
+
 void desenhar() {
     GUI::displayInit();
+
+    if (camera) {
+        camera->posicionar();
+    }
+
     GUI::setLight(0, posicaoLuz.x, posicaoLuz.y, posicaoLuz.z, true, false);
     GUI::drawOrigin(1.0);
     GUI::drawFloor();
@@ -132,7 +187,7 @@ void teclado(unsigned char tecla, int x, int y) {
         break;
 
         // Exibição de eixos
-    case 'E': // Alternar exibição dos eixos do objeto selecionado
+    case 'R': // Alternar exibição dos eixos do objeto selecionado
         if (obj) {
             obj->setMostrarEixos(!obj->mostrarEixos);
             cout << "Eixos do objeto " << objetoSelecionado << " "
@@ -156,8 +211,8 @@ void teclado(unsigned char tecla, int x, int y) {
     case 's': if (obj) obj->mover(0, -0.1, 0); break;
     case 'a': if (obj) obj->mover(-0.1, 0, 0); break;
     case 'd': if (obj) obj->mover(0.1, 0, 0); break;
-    case 'r': if (obj) obj->mover(0, 0, 0.1); break; // Movimenta no eixo Z para frente
-    case 'f': if (obj) obj->mover(0, 0, -0.1); break; // Movimenta no eixo Z para trás
+    case 'r': if (obj) obj->mover(0, 0, 0.1); break;
+    case 'f': if (obj) obj->mover(0, 0, -0.1); break;
 
         // Rotação
     case 'i': if (obj) obj->rotacionar(5, 0, 0); break;
@@ -213,6 +268,29 @@ void teclado(unsigned char tecla, int x, int y) {
         GerenciadorArquivo::carregarObjetos(objetos, objetoSelecionado);
         break;
 
+        // Câmeras
+    case 'W': camera->moverFrente(); break;
+    case 'S': camera->moverTras(); break;
+    case 'A': camera->moverEsquerda(); break;
+    case 'D': camera->moverDireita(); break;
+    case 'Q': camera->subir(); break;
+    case 'E': camera->descer(); break;
+
+
+
+
+    case '3': alternarCamera(0); break;
+    case '4': alternarCamera(1); break;
+    case '5': alternarCamera(2); break;
+    case '6': alternarCamera(3); break;
+    case '7': alternarCamera(4); break;
+    case '8': alternarCamera(5); break;
+
+
+
+
+
+
     default:
         break;
     }
@@ -220,6 +298,13 @@ void teclado(unsigned char tecla, int x, int y) {
 
 int main() {
     cout << "Trabalho 1 - Andson" << endl;
+    inicializarCameras();
+
+    camera = make_unique<CameraDistante>(
+        configuracoesCamera[indiceCameraAtual].cam->e,
+        configuracoesCamera[indiceCameraAtual].cam->c,
+        configuracoesCamera[indiceCameraAtual].cam->u
+        );
     GUI gui = GUI(800, 600, desenhar, teclado);
     return 0;
 }

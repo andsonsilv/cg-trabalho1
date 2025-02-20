@@ -14,7 +14,8 @@ class CameraDistante : public Camera
       CameraDistante();
       CameraDistante(Vetor3D e, Vetor3D c, Vetor3D u);
       CameraDistante(GLfloat ex, GLfloat ey, GLfloat ez, GLfloat cx, GLfloat cy, GLfloat cz, GLfloat ux, GLfloat uy, GLfloat uz);
-      ~CameraDistante(){};
+      virtual ~CameraDistante() {}
+
 
       //vetor Vec e u sempre perpendiculares e u sempre unitario
       virtual void zoom(GLfloat, GLfloat);

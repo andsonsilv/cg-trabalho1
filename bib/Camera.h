@@ -10,31 +10,37 @@
 
 #include "Vetor3D.h"
 
-class Camera
-{
-   public:
+class Camera {
+public:
+    Vetor3D e;
+    Vetor3D c;
+    Vetor3D u;
+    int estilo;
 
-      Vetor3D e;
-      Vetor3D c;
-      Vetor3D u;
+    Camera();
+    Camera(Vetor3D e, Vetor3D c, Vetor3D u);
+    Camera(GLfloat ex, GLfloat ey, GLfloat ez, GLfloat cx, GLfloat cy, GLfloat cz, GLfloat ux, GLfloat uy, GLfloat uz);
+    virtual ~Camera() {}  // 🔥 Agora deletar `camera` não causa comportamento indefinido
 
-      int estilo;
+    virtual void zoom(GLfloat, GLfloat) = 0;
+    virtual void translatex(GLfloat, GLfloat) = 0;
+    virtual void translatey(GLfloat, GLfloat) = 0;
+    virtual void rotatex(GLfloat, GLfloat) = 0;
+    virtual void rotatey(GLfloat, GLfloat) = 0;
+    virtual void rotatez(GLfloat, GLfloat) = 0;
+    virtual Vetor3D getPickedPoint(GLfloat, GLfloat) = 0;
 
-      Camera();
-      Camera(Vetor3D e, Vetor3D c, Vetor3D u);
-      Camera(GLfloat ex, GLfloat ey, GLfloat ez, GLfloat cx, GLfloat cy, GLfloat cz, GLfloat ux, GLfloat uy, GLfloat uz);
-      ~Camera(){};
+    void adaptavetorcdisttojogo();
+    void adaptavetorcjogotodist(GLfloat r);
 
-      //vetor Vec e u sempre perpendiculares e u sempre unitario
-      virtual void zoom(GLfloat, GLfloat) = 0;
-      virtual void translatex(GLfloat, GLfloat) = 0;
-      virtual void translatey(GLfloat, GLfloat) = 0;
-      virtual void rotatex(GLfloat, GLfloat) = 0;
-      virtual void rotatey(GLfloat, GLfloat) = 0;
-      virtual void rotatez(GLfloat, GLfloat) = 0;
-      virtual Vetor3D getPickedPoint(GLfloat, GLfloat) = 0;
-      void adaptavetorcdisttojogo();
-      void adaptavetorcjogotodist(GLfloat r);
+    void posicionar();
+    void moverFrente();
+    void moverTras();
+    void moverEsquerda();
+    void moverDireita();
+    void subir();
+    void descer();
 };
+
 
 #endif
