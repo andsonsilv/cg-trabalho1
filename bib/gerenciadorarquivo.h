@@ -1,16 +1,14 @@
-#ifndef GERENCIADORARVORES_H
-#define GERENCIADORARVORES_H
+#ifndef GERENCIADORARQUIVO_H
+#define GERENCIADORARQUIVO_H
 
 #include <vector>
 #include <memory>
 #include "objetos/objeto.h"
 
-class GerenciadorArvores {
+class GerenciadorArquivo {
 public:
-    static void adicionarArvoresFixas();
-    static void desenharArvores();
-private:
-    static std::vector<std::unique_ptr<Objeto>> objetos;
+    static void salvarObjetos(const std::vector<std::unique_ptr<Objeto>>& objetos);
+    static void carregarObjetos(std::vector<std::unique_ptr<Objeto>>& objetos, int& objetoSelecionado);
 };
 
-#endif // GERENCIADORARVORES_H
+#endif // GERENCIADORARQUIVO_H

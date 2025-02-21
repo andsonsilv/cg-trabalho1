@@ -3,15 +3,14 @@
 
 #include <vector>
 #include <memory>
-#include "objetos/arvoresimples.h"
-#include "objetos/arvorecomplexa.h"
-#include "objeto.h"
+#include "objetos/objeto.h"
 
 class GerenciadorArvores {
 public:
     static void adicionarArvoresFixas();
+    static void desenharArvores();
 private:
     static std::vector<std::unique_ptr<Objeto>> objetos;
 };
 
-#endif
+#endif // GERENCIADORARVORES_H

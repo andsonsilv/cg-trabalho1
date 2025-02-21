@@ -14,69 +14,9 @@
         "selecionado": false,
         "tipo": "ArvoreSimples",
         "translacao": [
-            0.0,
-            0.0,
-            0.0
-        ]
-    },
-    {
-        "escala": [
-            1.0,
-            1.0,
-            1.0
-        ],
-        "mostrarEixos": false,
-        "rotacao": [
-            0.0,
-            0.0,
-            0.0
-        ],
-        "selecionado": false,
-        "tipo": "ArvoreComplexa",
-        "translacao": [
-            0.0,
-            0.0,
-            0.0
-        ]
-    },
-    {
-        "escala": [
-            1.0,
-            1.0,
-            1.0
-        ],
-        "mostrarEixos": false,
-        "rotacao": [
-            0.0,
-            0.0,
-            0.0
-        ],
-        "selecionado": false,
-        "tipo": "ArvoreSimples",
-        "translacao": [
-            0.0,
-            0.0,
-            0.0
-        ]
-    },
-    {
-        "escala": [
-            1.0,
-            1.0,
-            1.0
-        ],
-        "mostrarEixos": false,
-        "rotacao": [
-            0.0,
-            0.0,
-            0.0
-        ],
-        "selecionado": false,
-        "tipo": "ArvoreSimples",
-        "translacao": [
-            0.0,
-            0.0,
-            0.0
+            1.4000002145767212,
+            -0.20000000298023224,
+            1.4901161193847656e-08
         ]
     },
     {
@@ -92,11 +32,31 @@
             0.0
         ],
         "selecionado": true,
-        "tipo": "ArvoreComplexa",
+        "tipo": "ArvoreSimples",
         "translacao": [
             1.4000002145767212,
-            0.30000001192092896,
+            0.0,
+            0.8000000715255737
+        ]
+    },
+    {
+        "escala": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "mostrarEixos": false,
+        "rotacao": [
+            0.0,
+            0.0,
             0.0
+        ],
+        "selecionado": false,
+        "tipo": "ArvoreSimples",
+        "translacao": [
+            -1.8000003099441528,
+            0.0,
+            -4.5999979972839355
         ]
     }
 ]

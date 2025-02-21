@@ -19,10 +19,8 @@
 #include "objetos/pista.h"
 
 
-
-
-
 using namespace std;
+
 
 // Vetor dinâmico de objetos
 vector<unique_ptr<Objeto>> objetos;
@@ -48,34 +46,42 @@ Carro3D carro("../3ds/cartest.3DS", -10.0, 0.05);
 // Instância da pista
 Pista pista;
 
-GerenciadorArvores::adicionarArvoresFixas();
-
 
 void desenhar() {
+    // Inicializa a exibição da cena
     GUI::displayInit();
 
+    // Obtém a câmera atual do gerenciador de câmeras
     Camera* camera = gerenciadorCameras.getCamera();
     if (camera) {
-        camera->posicionar();
+        camera->posicionar(); // Posiciona a câmera na cena
     }
 
-    GUI::setLight(0,0.0, 2.0, 1.0, true, false);
+    // Configuração da iluminação
+    GUI::setLight(0, 0.0, 2.0, 1.0, true, false); // Define uma luz na posição (0,2,1)
 
+    // Desenha o chão (grama)
     Grama::desenhar();
 
+    // Desenha a pista
     pista.desenhar();
 
+    // Desenha a placa de anúncio
     placaAnd.desenhar();
 
+    // Atualiza a posição do carro e o desenha na nova posição
     carro.atualizarPosicao();
     carro.desenhar();
 
+    // Desenha todas as árvores fixas do cenário
+    GerenciadorArvores::desenharArvores();
 
-
+    // Percorre o vetor de objetos e os desenha com as devidas transformações
     for (size_t i = 0; i < objetos.size(); i++) {
         auto& obj = objetos[i];
-        glPushMatrix();
+        glPushMatrix(); // Salva a matriz de transformação atual
 
+        // Se o objeto estiver selecionado, permite movimentação e rotação com teclas
         if ((int)i == objetoSelecionado) {
             obj->rotacaoX += glutGUI::dax * 5.0;
             obj->rotacaoY += glutGUI::day * 5.0;
@@ -83,22 +89,23 @@ void desenhar() {
             obj->translacaoY += glutGUI::dry * 0.5;
         }
 
-        // Aplicar transformações ao objeto
+        // Aplica as transformações ao objeto antes de desenhá-lo
         glTranslatef(obj->translacaoX, obj->translacaoY, obj->translacaoZ);
         glRotatef(obj->rotacaoX, 1, 0, 0);
         glRotatef(obj->rotacaoY, 0, 1, 0);
         glRotatef(obj->rotacaoZ, 0, 0, 1);
         glScalef(obj->escalaX, obj->escalaY, obj->escalaZ);
 
-        // Respeitar a exibição global dos eixos
+        // Se a opção de mostrar eixos estiver ativada, aplica a todos os objetos
         if (mostrarTodosEixos) {
             obj->setMostrarEixos(true);
         }
 
-        obj->desenhar();
-        glPopMatrix();
+        obj->desenhar(); // Chama a função de desenho do objeto
+        glPopMatrix(); // Restaura a matriz de transformação anterior
     }
 
+    // Se um objeto estiver selecionado, permite que ele seja escalado
     if (objetoSelecionado >= 0) {
         auto& obj = objetos[objetoSelecionado];
         float scaleFactor = 1.0 + glutGUI::dsx;
@@ -107,9 +114,9 @@ void desenhar() {
         obj->escalaZ *= scaleFactor;
     }
 
+    // Finaliza a exibição da cena
     GUI::displayEnd();
 }
-
 
 
 // Captura de teclado agora usa a classe Teclado
@@ -120,6 +127,7 @@ void teclado(unsigned char tecla, int x, int y) {
 
 int main() {
     cout << "Trabalho Computação Gráfica - Andson" << endl;
+    GerenciadorArvores::adicionarArvoresFixas();
     GUI gui = GUI(800, 600, desenhar, teclado);
     return 0;
 }
