@@ -14,7 +14,11 @@
 
 using namespace std;
 
-Model3DS carro = Model3DS("../3ds/maclaren.3DS");
+Model3DS carro = Model3DS("../3ds/cartest.3DS");
+
+float posicaoCarroZ = -10.0; // Começa no início da pista
+float velocidadeCarro = 0.05; // Velocidade de deslocamento
+
 
 Vetor3D posicaoLuz = Vetor3D(1.0, 1.5, 1.0);
 
@@ -32,6 +36,7 @@ bool mostrarTodosEixos = false;
 
 // Índice da configuração de câmera atual
 int indiceCameraAtual = 0;
+
 
 
 void desenhar() {
@@ -53,15 +58,25 @@ void desenhar() {
     GUI::selecionaTextura(0);
     glBegin(GL_QUADS);
     glNormal3f(0.0, 1.0, 0.0);
-    glTexCoord2f(0, 0);  glVertex3f(2, 0.002, -10);
+    glTexCoord2f(0, 0);  glVertex3f(1, 0.002, -10);
     glTexCoord2f(1, 0);  glVertex3f(-1, 0.002, -10);
-    glTexCoord2f(0, 1);  glVertex3f(2, 0.002, 10);
-    glTexCoord2f(1, 1);  glVertex3f(-1, 0.002, 10);
+    glTexCoord2f(0, 1);  glVertex3f(-1, 0.002, 10);
+    glTexCoord2f(1, 1);  glVertex3f(1, 0.002, 10);
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
 
-    GUI::draw3ds(carro);
+    GUI::draw3ds(carro, 0, 0.1, posicaoCarroZ, 0, 0, 0, 1, 1, 1);
+
+
+    // Atualiza a posição do carro
+    posicaoCarroZ += velocidadeCarro;
+
+    // Se chegar ao fim da pista, reinicia no começo
+    if (posicaoCarroZ > 10.0) {
+        posicaoCarroZ = -10.0;
+    }
+
 
 
     for (size_t i = 0; i < objetos.size(); i++) {
