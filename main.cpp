@@ -10,8 +10,11 @@
 #include "bib/CameraDistante.h"
 #include "bib/CameraJogo.h"
 #include "bib/gerenciadorcameras.h"
+#include "bib/model3ds.h"
 
 using namespace std;
+
+Model3DS carro = Model3DS("../3ds/maclaren.3DS");
 
 Vetor3D posicaoLuz = Vetor3D(1.0, 1.5, 1.0);
 
@@ -40,8 +43,26 @@ void desenhar() {
     }
 
     GUI::setLight(0, posicaoLuz.x, posicaoLuz.y, posicaoLuz.z, true, false);
-    GUI::drawOrigin(1.0);
-    GUI::drawFloor();
+
+    // grama
+    glColor3f(0.2, 0.35, 0.15);
+    GUI::drawFloor(20, 20, 1, 1, 1, 1);
+
+    // pista
+    glEnable(GL_TEXTURE_2D);
+    GUI::selecionaTextura(0);
+    glBegin(GL_QUADS);
+    glNormal3f(0.0, 1.0, 0.0);
+    glTexCoord2f(0, 0);  glVertex3f(2, 0.002, -10);
+    glTexCoord2f(1, 0);  glVertex3f(-1, 0.002, -10);
+    glTexCoord2f(0, 1);  glVertex3f(2, 0.002, 10);
+    glTexCoord2f(1, 1);  glVertex3f(-1, 0.002, 10);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+
+    GUI::draw3ds(carro);
+
 
     for (size_t i = 0; i < objetos.size(); i++) {
         auto& obj = objetos[i];

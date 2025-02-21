@@ -7,7 +7,7 @@
 //texture
 bool renderTexture = true;
 GLuint tList[7]; // Array of 4 texture objects
-enum { GRANITO = 0, MARMORE, LADRILHO, REFRI, SKY, KICK_ASS, QUADRICULADO };
+enum { PISTA = 0, REFRI, AND };
 int texture_id = 0;
 bool texture_automatic = false;
 enum { OBJECT = 0, EYE, SPHERE_MAP };
@@ -26,36 +26,19 @@ void GUI::loadTextures() {
          ilInit();
 
 
-    // Generate 7 texture object ID's
-    glGenTextures(7, tList);
+    // Generate 3 texture object ID's
+    glGenTextures(2, tList);
 
-    glBindTexture(GL_TEXTURE_2D, tList[GRANITO]);
-    //carrega a imagem e seta parametros de mapeamento de textura
-    OT::loadTexture( "../textures/granito.bmp", true );
-
-    glBindTexture(GL_TEXTURE_2D, tList[MARMORE]);
-    //carrega a imagem e seta parametros de mapeamento de textura
-    OT::loadTexture( "../textures/marmore.bmp", true );
-
-    glBindTexture(GL_TEXTURE_2D, tList[LADRILHO]);
-    //carrega a imagem e seta parametros de mapeamento de textura
-    OT::loadTexture( "../textures/teto.jpg", true );
+    glBindTexture(GL_TEXTURE_2D, tList[PISTA]);
+    OT::loadTexture( "../textures/pista.jpeg", true );
 
     glBindTexture(GL_TEXTURE_2D, tList[REFRI]);
     //carrega a imagem e seta parametros de mapeamento de textura
     OT::loadTexture( "../textures/refri.bmp", true );
 
-    glBindTexture(GL_TEXTURE_2D, tList[SKY]);
-    //carrega a imagem e seta parametros de mapeamento de textura
-    OT::loadTexture( "../textures/sky.bmp", true );
-
-    glBindTexture(GL_TEXTURE_2D, tList[KICK_ASS]);
-    //carrega a imagem e seta parametros de mapeamento de textura
-    OT::loadTextureRAW( "../textures/kick_ass.raw", true );
-
-    glBindTexture(GL_TEXTURE_2D, tList[QUADRICULADO]);
-    //carrega a imagem e seta parametros de mapeamento de textura
-    OT::loadTexture( "../textures/quadriculado.bmp", true );
+    // glBindTexture(GL_TEXTURE_2D, tList[AND]);
+    // //carrega a imagem e seta parametros de mapeamento de textura
+    // OT::loadTexture( "../textures/and.jpg", true );
 }
 
 void GUI::habilitaTextura( bool renderTexture, bool texture_automatic, int texture_mode ) {
@@ -139,7 +122,8 @@ void GUI::GLUTInit()
 
 void GUI::GLInit()
 {
-    glClearColor(0.6,0.6,0.0,1.0); //define a cor para limpar a imagem (cor de fundo)
+    glClearColor(0.53, 0.81, 0.98, 1.0); // Azul claro (RGB Normalizado)
+    //define a cor para limpar a imagem (cor de fundo)
     //glClearColor(1.0,1.0,1.0,1.0); //define a cor para limpar a imagem (cor de fundo)
 
     glEnable(GL_LIGHTING); //habilita iluminacao (chamada no setLight)
@@ -1140,27 +1124,28 @@ void GUI::drawCamera(float tamanho) {
     gluDeleteQuadric( quad );
 }
 
+
+
 void GUI::draw3ds(Model3DS &model3DS, float tx, float ty, float tz,
-                                      float ax, float ay, float az,
-                                      float sx, float sy, float sz)
+                  float ax, float ay, float az,
+                  float sx, float sy, float sz)
 {
     glPushMatrix();
-        //transformacoes do objeto ja desenhado de acordo com o seu sistema local
-        glTranslatef(tx,ty,tz);
-        glRotatef(ax,1,0,0);
-        glRotatef(ay,0,1,0);
-        glRotatef(az,0,0,1);
-        glScalef(sx,sy,sz);
-        //sist local
-        //drawOrigin(0.5);
-        //desfazendo as transformações usadas na hora da modelagem
-        //trazendo para a origem, alinhando com os eixos locais e ajustando para um tamanho adequado (Sl.Rl.Tl)
-        glScalef(1,1,1);
-        glRotatef(-90, 1,0,0);
-        glTranslatef(0,0,0);
-        //primeiro aplica uma escala para que o objeto fique visível adequadamente no cenário
-        float s = 0.0005;
-        glScalef(s,s,s);
-        model3DS.draw();
+    //transformacoes do objeto ja desenhado de acordo com o seu sistema local
+    glTranslatef(tx,ty,tz);
+    glRotatef(ax,1,0,0);
+    glRotatef(ay,0,1,0);
+    glRotatef(az,0,0,1);
+    glScalef(sx,sy,sz);
+    //sist local
+    //drawOrigin(0.5);
+    //trazendo para a origem, alinhando com os eixos locais e ajustando para um tamanho adequado (Sl.Rl.Tl)
+    float s = 0.0005;
+    glScalef(s,s,s);
+    glRotatef(-90,1,0,0);
+    glDisable(GL_COLOR_MATERIAL); // Evita interferência no modelo 3DS
+    model3DS.draw();
+    glEnable(GL_COLOR_MATERIAL);
     glPopMatrix();
 }
+

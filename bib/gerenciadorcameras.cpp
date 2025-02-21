@@ -3,12 +3,25 @@
 #include <GL/glut.h>
 
 GerenciadorCameras::GerenciadorCameras() : indiceCameraAtual(0) {
-    configuracoesCamera.emplace_back("Vista Aérea", std::make_unique<CameraDistante>(Vetor3D(0, 8, 15), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
-    configuracoesCamera.emplace_back("Lateral Esquerda", std::make_unique<CameraDistante>(Vetor3D(-10, 5, 5), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
-    configuracoesCamera.emplace_back("Lateral Direita", std::make_unique<CameraDistante>(Vetor3D(10, 5, 5), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
-    configuracoesCamera.emplace_back("Primeira Pessoa", std::make_unique<CameraJogo>(Vetor3D(0, 2, 5), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
-    configuracoesCamera.emplace_back("Traseira", std::make_unique<CameraJogo>(Vetor3D(0, 1, -5), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
-    configuracoesCamera.emplace_back("Vista de Baixo", std::make_unique<CameraJogo>(Vetor3D(0, -5, 0), Vetor3D(0, 1, 0), Vetor3D(0, 0, 1)));
+    configuracoesCamera.emplace_back("Visão Frontal",
+                                     std::make_unique<CameraJogo>(Vetor3D(0, 2, 6), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
+
+    configuracoesCamera.emplace_back("Lateral Esquerda Próxima",
+                                     std::make_unique<CameraDistante>(Vetor3D(-5, 3, 3), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
+
+    configuracoesCamera.emplace_back("Vista Superior",
+                                     std::make_unique<CameraDistante>(Vetor3D(0, 6, 10), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
+
+    configuracoesCamera.emplace_back("Lateral Direita Próxima",
+                                     std::make_unique<CameraDistante>(Vetor3D(5, 3, 3), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
+
+    configuracoesCamera.emplace_back("Traseira Aproximada",
+                                     std::make_unique<CameraJogo>(Vetor3D(0, 2, -4), Vetor3D(0, 1, 0), Vetor3D(0, 1, 0)));
+
+    configuracoesCamera.emplace_back("Vista Inferior",
+                                     std::make_unique<CameraJogo>(Vetor3D(0, -3, 2), Vetor3D(0, 1, 0), Vetor3D(0, 0, 1)));
+
+
 
     // Inicializa a câmera com a primeira configuração
     camera = std::make_unique<CameraDistante>(
