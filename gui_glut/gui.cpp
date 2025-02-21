@@ -6,8 +6,8 @@
 
 //texture
 bool renderTexture = true;
-GLuint tList[7]; // Array of 4 texture objects
-enum { PISTA = 0, REFRI, AND };
+GLuint tList[2];
+enum { PISTA = 0, AND };
 int texture_id = 0;
 bool texture_automatic = false;
 enum { OBJECT = 0, EYE, SPHERE_MAP };
@@ -26,19 +26,15 @@ void GUI::loadTextures() {
          ilInit();
 
 
-    // Generate 3 texture object ID's
+    // Generate 2 texture object ID's
     glGenTextures(2, tList);
 
     glBindTexture(GL_TEXTURE_2D, tList[PISTA]);
     OT::loadTexture( "../textures/pista.jpeg", true );
 
-    glBindTexture(GL_TEXTURE_2D, tList[REFRI]);
+    glBindTexture(GL_TEXTURE_2D, tList[AND]);
     //carrega a imagem e seta parametros de mapeamento de textura
-    OT::loadTexture( "../textures/refri.bmp", true );
-
-    // glBindTexture(GL_TEXTURE_2D, tList[AND]);
-    // //carrega a imagem e seta parametros de mapeamento de textura
-    // OT::loadTexture( "../textures/and.jpg", true );
+    OT::loadTexture( "../textures/and.png", true );
 }
 
 void GUI::habilitaTextura( bool renderTexture, bool texture_automatic, int texture_mode ) {

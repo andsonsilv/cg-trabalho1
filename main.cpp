@@ -20,7 +20,7 @@ float posicaoCarroZ = -10.0; // Começa no início da pista
 float velocidadeCarro = 0.05; // Velocidade de deslocamento
 
 
-Vetor3D posicaoLuz = Vetor3D(1.0, 1.5, 1.0);
+Vetor3D posicaoLuz = Vetor3D(0.0, 2, 1.0);
 
 // Vetor dinâmico de objetos
 vector<unique_ptr<Objeto>> objetos;
@@ -37,6 +37,51 @@ bool mostrarTodosEixos = false;
 // Índice da configuração de câmera atual
 int indiceCameraAtual = 0;
 
+void desenharPlaca() {
+    glEnable(GL_TEXTURE_2D);
+    GUI::selecionaTextura(1); // Supondo que a textura do anúncio seja o índice 1
+    glColor3f(1, 1, 1); // Garante que a textura mantenha suas cores originais
+    glDisable(GL_LIGHTING);
+
+    glPushMatrix(); // Salva o estado da matriz antes das transformações
+
+    glTranslatef(-2.0, 0.1, -3.5); // Ajustei para a direita e um pouco mais à frente
+
+    // Correção da inclinação (mantendo inclinação para trás e girando mais para a pista)
+    glRotatef(-15, 1, 0, 0); // Inclina para trás (X)
+    glRotatef(-15, 0, 0, 1); // Gira a placa para dentro (Z) - agora sim!
+
+    glScalef(0.7, 0.7, 1.0); // Reduzindo o tamanho da placa
+
+    // Corrigindo a iluminação da textura
+    glDisable(GL_COLOR_MATERIAL);
+    glColor3f(1, 1, 1); // Define a cor branca para evitar o esverdeado
+
+    glBegin(GL_QUADS);
+    glNormal3f(0, 0, 1); // Normal apontando para frente
+
+    // Mantendo a textura na orientação correta
+    glTexCoord2f(0, 1); glVertex3f(-0.8, 0, 0);
+    glTexCoord2f(1, 1); glVertex3f(0.8, 0, 0);
+    glTexCoord2f(1, 0); glVertex3f(0.8, 1, 0);
+    glTexCoord2f(0, 0); glVertex3f(-0.8, 1, 0);
+
+    glEnd();
+
+    glPopMatrix(); // Restaura a matriz, impedindo que a rotação afete outros objetos
+
+    glEnable(GL_LIGHTING); // Reativa iluminação depois
+    glDisable(GL_TEXTURE_2D);
+}
+
+
+
+
+
+
+
+
+
 
 
 void desenhar() {
@@ -46,6 +91,7 @@ void desenhar() {
     if (camera) {
         camera->posicionar();
     }
+
 
     GUI::setLight(0, posicaoLuz.x, posicaoLuz.y, posicaoLuz.z, true, false);
 
@@ -65,6 +111,8 @@ void desenhar() {
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
+    // Desenha a placa
+    desenharPlaca();
 
     GUI::draw3ds(carro, 0, 0.1, posicaoCarroZ, 0, 0, 0, 1, 1, 1);
 
