@@ -5,10 +5,13 @@
 #include <memory>
 #include "objetos/arvoresimples.h"
 #include "objetos/arvorecomplexa.h"
+#include "objeto.h"
 
 class GerenciadorArvores {
 public:
-    static void adicionarArvoresFixas(std::vector<std::unique_ptr<Objeto>>& objetos);
+    static void adicionarArvoresFixas();
+private:
+    static std::vector<std::unique_ptr<Objeto>> objetos;
 };
 
 #endif

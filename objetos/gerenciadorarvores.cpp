@@ -1,6 +1,10 @@
 #include "gerenciadorarvores.h"
+#include "objetos/arvoresimples.h"
+#include "objetos/arvorecomplexa.h"
 
-void GerenciadorArvores::adicionarArvoresFixas(std::vector<std::unique_ptr<Objeto>>& objetos) {
+std::vector<std::unique_ptr<Objeto>> GerenciadorArvores::objetos;
+
+void GerenciadorArvores::adicionarArvoresFixas() {
     float posicaoX = 1.5;
     float posicaoZInicial = -6.0;
     float espacamentoZ = 1.5;
@@ -25,6 +29,14 @@ void GerenciadorArvores::adicionarArvoresFixas(std::vector<std::unique_ptr<Objet
                 );
             arvore->setMostrarEixos(false);
             objetos.push_back(std::move(arvore));
+        }
+    }
+}
+
+void GerenciadorArvores::desenharArvores() {
+    for (auto& arvore : objetos) {
+        if (arvore) {
+            arvore->desenhar();
         }
     }
 }

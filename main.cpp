@@ -5,17 +5,19 @@
 #include <objetos/arvorecomplexa.h>
 #include <GL/glut.h>
 #include <gui.h>
-#include <objetos/gerenciadorarquivo.h>
+#include "bib/gerenciadorarquivo.h"
 #include "bib/Camera.h"
 #include "bib/CameraDistante.h"
 #include "bib/CameraJogo.h"
 #include "bib/gerenciadorcameras.h"
 #include "bib/model3ds.h"
-#include "objetos/teclado.h"
+#include "bib/teclado.h"
 #include "objetos/placaanuncio.h"
 #include "objetos/gerenciadorarvores.h"
 #include "objetos/grama.h"
 #include "objetos/carro3d.h"
+#include "objetos/pista.h"
+
 
 
 
@@ -43,6 +45,10 @@ PlacaAnuncio placaAnd(-2.0, 0.1, -3.5, -15, -15, 0.7, 0.7, 1.0);
 // Instância do Carro3D com posição inicial e velocidade
 Carro3D carro("../3ds/cartest.3DS", -10.0, 0.05);
 
+// Instância da pista
+Pista pista;
+
+GerenciadorArvores::adicionarArvoresFixas();
 
 
 void desenhar() {
@@ -57,17 +63,7 @@ void desenhar() {
 
     Grama::desenhar();
 
-    // pista
-    glEnable(GL_TEXTURE_2D);
-    GUI::selecionaTextura(0);
-    glBegin(GL_QUADS);
-    glNormal3f(0.0, 1.0, 0.0);
-    glTexCoord2f(0, 0);  glVertex3f(1, 0.002, -10);
-    glTexCoord2f(1, 0);  glVertex3f(-1, 0.002, -10);
-    glTexCoord2f(0, 1);  glVertex3f(-1, 0.002, 10);
-    glTexCoord2f(1, 1);  glVertex3f(1, 0.002, 10);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
+    pista.desenhar();
 
     placaAnd.desenhar();
 
@@ -124,7 +120,6 @@ void teclado(unsigned char tecla, int x, int y) {
 
 int main() {
     cout << "Trabalho Computação Gráfica - Andson" << endl;
-    GerenciadorArvores::adicionarArvoresFixas(objetos);
     GUI gui = GUI(800, 600, desenhar, teclado);
     return 0;
 }

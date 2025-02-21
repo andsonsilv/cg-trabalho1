@@ -23,10 +23,11 @@ SOURCES += main.cpp \
     objetos/arvorecomplexa.cpp \
     objetos/arvoresimples.cpp \
     objetos/carro3d.cpp \
-    objetos/gerenciadorarquivo.cpp \
+    bib/gerenciadorarquivo.cpp \
     objetos/gerenciadorarvores.cpp \
+    objetos/pista.cpp \
     objetos/placaanuncio.cpp \
-    objetos/teclado.cpp
+    bib/teclado.cpp
 
 HEADERS += \
     bib/Camera.h \
@@ -43,9 +44,10 @@ HEADERS += \
     objetos/arvorecomplexa.h \
     objetos/arvoresimples.h \
     objetos/carro3d.h \
-    objetos/gerenciadorarquivo.h \
+    bib/gerenciadorarquivo.h \
     objetos/gerenciadorarvores.h \
     objetos/grama.h \
     objetos/objeto.h \
+    objetos/pista.h \
     objetos/placaanuncio.h \
-    objetos/teclado.h
+    bib/teclado.h

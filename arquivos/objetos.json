@@ -72,10 +72,30 @@
             0.0
         ],
         "selecionado": false,
-        "tipo": "ArvoreComplexa",
+        "tipo": "ArvoreSimples",
         "translacao": [
             0.0,
             0.0,
+            0.0
+        ]
+    },
+    {
+        "escala": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "mostrarEixos": false,
+        "rotacao": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "selecionado": true,
+        "tipo": "ArvoreComplexa",
+        "translacao": [
+            1.4000002145767212,
+            0.30000001192092896,
             0.0
         ]
     }

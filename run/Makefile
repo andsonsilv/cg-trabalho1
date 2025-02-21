@@ -66,10 +66,11 @@ SOURCES       = ../main.cpp \
 		../objetos/arvorecomplexa.cpp \
 		../objetos/arvoresimples.cpp \
 		../objetos/carro3d.cpp \
-		../objetos/gerenciadorarquivo.cpp \
+		../bib/gerenciadorarquivo.cpp \
 		../objetos/gerenciadorarvores.cpp \
+		../objetos/pista.cpp \
 		../objetos/placaanuncio.cpp \
-		../objetos/teclado.cpp 
+		../bib/teclado.cpp 
 OBJECTS       = main.o \
 		Camera.o \
 		CameraDistante.o \
@@ -86,6 +87,7 @@ OBJECTS       = main.o \
 		carro3d.o \
 		gerenciadorarquivo.o \
 		gerenciadorarvores.o \
+		pista.o \
 		placaanuncio.o \
 		teclado.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -173,12 +175,13 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		objetos/arvorecomplexa.h \
 		objetos/arvoresimples.h \
 		objetos/carro3d.h \
-		objetos/gerenciadorarquivo.h \
+		bib/gerenciadorarquivo.h \
 		objetos/gerenciadorarvores.h \
 		objetos/grama.h \
 		objetos/objeto.h \
+		objetos/pista.h \
 		objetos/placaanuncio.h \
-		objetos/teclado.h ../main.cpp \
+		bib/teclado.h ../main.cpp \
 		../bib/Camera.cpp \
 		../bib/CameraDistante.cpp \
 		../bib/CameraJogo.cpp \
@@ -192,10 +195,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../objetos/arvorecomplexa.cpp \
 		../objetos/arvoresimples.cpp \
 		../objetos/carro3d.cpp \
-		../objetos/gerenciadorarquivo.cpp \
+		../bib/gerenciadorarquivo.cpp \
 		../objetos/gerenciadorarvores.cpp \
+		../objetos/pista.cpp \
 		../objetos/placaanuncio.cpp \
-		../objetos/teclado.cpp
+		../bib/teclado.cpp
 QMAKE_TARGET  = GLUTdoZero
 DESTDIR       = 
 TARGET        = GLUTdoZero
@@ -407,13 +411,14 @@ main.o: ../main.cpp ../objetos/arvoresimples.h \
 		../bib/CameraJogo.h \
 		../bib/Desenha.h \
 		../bib/model3ds.h \
-		../objetos/gerenciadorarquivo.h \
+		../bib/gerenciadorarquivo.h \
 		../bib/gerenciadorcameras.h \
-		../objetos/teclado.h \
+		../bib/teclado.h \
 		../objetos/placaanuncio.h \
 		../objetos/gerenciadorarvores.h \
 		../objetos/grama.h \
-		../objetos/carro3d.h
+		../objetos/carro3d.h \
+		../objetos/pista.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
 Camera.o: ../bib/Camera.cpp ../bib/Camera.h \
@@ -480,15 +485,22 @@ arvoresimples.o: ../objetos/arvoresimples.cpp ../objetos/arvoresimples.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arvoresimples.o ../objetos/arvoresimples.cpp
 
 carro3d.o: ../objetos/carro3d.cpp ../objetos/carro3d.h \
-		../bib/model3ds.h
+		../bib/model3ds.h \
+		../gui_glut/gui.h \
+		../gui_glut/extra.h \
+		../bib/CameraDistante.h \
+		../bib/Camera.h \
+		../bib/Vetor3D.h \
+		../bib/CameraJogo.h \
+		../bib/Desenha.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o carro3d.o ../objetos/carro3d.cpp
 
-gerenciadorarquivo.o: ../objetos/gerenciadorarquivo.cpp ../objetos/gerenciadorarquivo.h \
+gerenciadorarquivo.o: ../bib/gerenciadorarquivo.cpp ../bib/gerenciadorarquivo.h \
 		../objetos/objeto.h \
 		../objetos/arvoresimples.h \
 		../objetos/arvore.h \
 		../objetos/arvorecomplexa.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gerenciadorarquivo.o ../objetos/gerenciadorarquivo.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gerenciadorarquivo.o ../bib/gerenciadorarquivo.cpp
 
 gerenciadorarvores.o: ../objetos/gerenciadorarvores.cpp ../objetos/gerenciadorarvores.h \
 		../objetos/arvoresimples.h \
@@ -496,6 +508,17 @@ gerenciadorarvores.o: ../objetos/gerenciadorarvores.cpp ../objetos/gerenciadorar
 		../objetos/objeto.h \
 		../objetos/arvorecomplexa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gerenciadorarvores.o ../objetos/gerenciadorarvores.cpp
+
+pista.o: ../objetos/pista.cpp ../objetos/pista.h \
+		../gui_glut/gui.h \
+		../gui_glut/extra.h \
+		../bib/CameraDistante.h \
+		../bib/Camera.h \
+		../bib/Vetor3D.h \
+		../bib/CameraJogo.h \
+		../bib/Desenha.h \
+		../bib/model3ds.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pista.o ../objetos/pista.cpp
 
 placaanuncio.o: ../objetos/placaanuncio.cpp ../objetos/placaanuncio.h \
 		../gui_glut/gui.h \
@@ -508,8 +531,8 @@ placaanuncio.o: ../objetos/placaanuncio.cpp ../objetos/placaanuncio.h \
 		../bib/model3ds.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o placaanuncio.o ../objetos/placaanuncio.cpp
 
-teclado.o: ../objetos/teclado.cpp ../objetos/teclado.h \
-		../objetos/gerenciadorarquivo.h \
+teclado.o: ../bib/teclado.cpp ../bib/teclado.h \
+		../bib/gerenciadorarquivo.h \
 		../objetos/objeto.h \
 		../bib/gerenciadorcameras.h \
 		../bib/Camera.h \
@@ -523,7 +546,7 @@ teclado.o: ../objetos/teclado.cpp ../objetos/teclado.h \
 		../objetos/arvoresimples.h \
 		../objetos/arvore.h \
 		../objetos/arvorecomplexa.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o teclado.o ../objetos/teclado.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o teclado.o ../bib/teclado.cpp
 
 ####### Install
 
