@@ -75,15 +75,6 @@ void desenharPlaca() {
 }
 
 
-
-
-
-
-
-
-
-
-
 void desenhar() {
     GUI::displayInit();
 
@@ -332,14 +323,53 @@ void teclado(unsigned char tecla, int x, int y) {
     case '7': gerenciadorCameras.alternarCamera(4); break;
     case '8': gerenciadorCameras.alternarCamera(5); break;
 
+    case 'L': // Pressionar 'L' alterna a visibilidade da luz
+        GUI::ocultarLuz = !GUI::ocultarLuz;
+        cout << "Luz " << (GUI::ocultarLuz ? "ocultada" : "visível") << endl;
+        break;
+
 
     default:
         break;
     }
 }
 
+void adicionarArvoresFixas() {
+    float posicaoX = 1.5;  // Mantém todas alinhadas no eixo X
+    float posicaoZInicial = -6.0;  // Primeira árvore
+    float espacamentoZ = 2.5;  // Espaço fixo entre as árvores
+    int quantidadeArvores = 4;  // Número total de árvores
+
+    for (int i = 0; i < quantidadeArvores; i++) {
+        float posicaoZ = posicaoZInicial + i * espacamentoZ;  // Calcula a posição Z para cada árvore
+
+        if (i % 2 == 0) { // Árvores Simples
+            auto arvore = make_unique<ArvoreSimples>(
+                posicaoX, 0.0, posicaoZ,   // Posição com X fixo e Z ajustado
+                1.2f, 0.2f, 0.5f, 0.3f,  // Escala
+                0.55f, 0.27f, 0.07f, 0.0f, 0.8f, 0.0f  // Cores
+                );
+            arvore->setMostrarEixos(false);
+            objetos.push_back(move(arvore));
+        } else { // Árvores Complexas
+            auto arvore = make_unique<ArvoreComplexa>(
+                posicaoX, 0.0, posicaoZ,   // Posição com X fixo e Z ajustado
+                1.0f, 0.25f, 0.8f, 0.35f,  // Escala
+                0.6f, 0.3f, 0.1f, 0.0f, 0.7f, 0.0f  // Cores
+                );
+            arvore->setMostrarEixos(false);
+            objetos.push_back(move(arvore));
+        }
+    }
+}
+
+
+
+
+
 int main() {
-    cout << "Trabalho 1 - Andson" << endl;
+    cout << "Trabalho Computação Gráfica - Andson" << endl;
+    adicionarArvoresFixas();
     GUI gui = GUI(800, 600, desenhar, teclado);
     return 0;
 }

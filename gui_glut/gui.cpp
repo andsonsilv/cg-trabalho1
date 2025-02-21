@@ -1,5 +1,7 @@
 #include "gui.h"
 
+bool GUI::ocultarLuz = true;
+
 //-----Texturas---------
 //texture
 #include "OpenTextures.h"
@@ -278,16 +280,19 @@ void GUI::setLight(int id, float posx, float posy, float posz, bool onOffKeyDefa
     GLfloat light_position[] = { posx + glutGUI::lx, posy + glutGUI::ly, posz + glutGUI::lz, 1.0f }; //4o parametro: 0.0 - luz no infinito, 1.0 - luz pontual
         if (!glutGUI::pontual_light[id]) light_position[3] = 0.0f;
     glLightfv(GL_LIGHT0+id, GL_POSITION, light_position);
-    //desenha uma esfera representando a luz
-    if (glutGUI::iluminacao && glutGUI::enabled_light[id] && !glutGUI::hidden_light[id]) {
+        // Desenha uma esfera representando a luz, **APENAS SE ocultarLuz FOR FALSO**
+    // Desenha uma esfera representando a luz, **APENAS SE ocultarLuz FOR FALSO**
+    if (!ocultarLuz && glutGUI::iluminacao && glutGUI::enabled_light[id] && !glutGUI::hidden_light[id]) {
         glDisable(GL_LIGHTING);
         glColor4f(1.0,1.0,1.0,1.0);
         glPushMatrix();
-            glTranslatef(light_position[0],light_position[1],light_position[2]);
-            glutSolidSphere(0.05,glutGUI::slices,glutGUI::stacks);
+        glTranslatef(light_position[0],light_position[1],light_position[2]);
+        glutSolidSphere(0.05,glutGUI::slices,glutGUI::stacks);
         glPopMatrix();
         glEnable(GL_LIGHTING);
     }
+
+
     //desenha uma linha do (0,0,0) ate a posicao da luz
     if (glutGUI::iluminacao && glutGUI::enabled_light[id] && glutGUI::trans_luz) {
         glDisable(GL_LIGHTING);

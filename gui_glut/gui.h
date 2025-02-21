@@ -36,6 +36,8 @@ class GUI {
         static void setLight(int id, float posx, float posy, float posz, bool onOffKeyDefault = false, bool attenuated = true, bool low = false, bool hidden = false, bool pontual = true, bool spot = false, bool onOffUserControl = true);
         static void setColor(float r, float g, float b, float a = 1.0, bool specular = false);
 
+        static bool ocultarLuz; // Variável para controlar se a luz será visível
+
         //---------------transformacoes---------------
         static void glShearXf(float shY, float shZ); //Y e Z fixos
         static void glShearYf(float shX, float shZ); //X e Z fixos
