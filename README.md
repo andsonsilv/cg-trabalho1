@@ -84,19 +84,28 @@ O arquivo JSON contém informações como **posição, rotação, escala, tipo d
 ## 🎯 **Requisitos do Trabalho**
 
 ### **Implementação do Modelador (6.0 Pontos)**
-- [ ] Implementação Orientada a Objetos (2.5 Pontos)
-- [ ] Manipulação do Vetor de Objetos (1.5 Ponto)
-- [ ] Modificação dos Atributos do Objeto Selecionado (1.5 Ponto)
-- [ ] Salvar e carregar objetos (0.5 Ponto)
+- **Implementação Orientada a Objetos (2.5 Pontos)**
+  - Herança e método `desenhar`
+  - Transformações (Translação, Rotação, Escala)
+  - Seleção e destaque do objeto
+  - Exibição dos eixos locais
+
+- **Manipulação do Vetor de Objetos (1.5 Ponto)**
+  - Inclusão, seleção e remoção de objetos do vetor
+
+- **Modificação dos Atributos do Objeto Selecionado (1.5 Ponto)**
+  - Translação, rotação, escala e controle dos eixos locais
+
+- **Salvar e carregar objetos (0.5 Ponto)**
 
 ### **Câmeras (1.0 Ponto)**
-- [ ] Implementação da Câmera Base
-- [ ] Definir pelo menos 6 câmeras pré-estabelecidas
+- Implementação da Câmera Base
+- Definir pelo menos 6 câmeras pré-estabelecidas
 
 ### **Modelagem Final (3.0 Pontos)**
-- [ ] Modelar um cenário detalhado
-- [ ] Pelo menos 5 tipos de objetos diferentes
-- [ ] Uso de `glBegin(...); glEnd();` em pelo menos 2 objetos
-- [ ] Definir `glNormal3f(...)` corretamente
-- [ ] Pelo menos 2 faces inclinadas no cenário
+- Modelar um cenário detalhado
+- Pelo menos 5 tipos de objetos diferentes
+- Uso de `glBegin(...); glEnd();` em pelo menos 2 objetos
+- Definir `glNormal3f(...)` corretamente
+- Pelo menos 2 faces inclinadas no cenário
 
