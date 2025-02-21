@@ -9,13 +9,13 @@
         "rotacao": [
             0.0,
             0.0,
-            20.0
+            0.0
         ],
         "selecionado": false,
         "tipo": "ArvoreSimples",
         "translacao": [
             0.0,
-            -0.5,
+            0.0,
             0.0
         ]
     },

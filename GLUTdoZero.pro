@@ -22,7 +22,11 @@ SOURCES += main.cpp \
     gui_glut/OpenTextures.cpp \
     objetos/arvorecomplexa.cpp \
     objetos/arvoresimples.cpp \
-    objetos/gerenciadorarquivo.cpp
+    objetos/carro3d.cpp \
+    objetos/gerenciadorarquivo.cpp \
+    objetos/gerenciadorarvores.cpp \
+    objetos/placaanuncio.cpp \
+    objetos/teclado.cpp
 
 HEADERS += \
     bib/Camera.h \
@@ -38,5 +42,10 @@ HEADERS += \
     objetos/arvore.h \
     objetos/arvorecomplexa.h \
     objetos/arvoresimples.h \
+    objetos/carro3d.h \
     objetos/gerenciadorarquivo.h \
-    objetos/objeto.h
+    objetos/gerenciadorarvores.h \
+    objetos/grama.h \
+    objetos/objeto.h \
+    objetos/placaanuncio.h \
+    objetos/teclado.h

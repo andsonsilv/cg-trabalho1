@@ -65,7 +65,11 @@ SOURCES       = ../main.cpp \
 		../gui_glut/OpenTextures.cpp \
 		../objetos/arvorecomplexa.cpp \
 		../objetos/arvoresimples.cpp \
-		../objetos/gerenciadorarquivo.cpp 
+		../objetos/carro3d.cpp \
+		../objetos/gerenciadorarquivo.cpp \
+		../objetos/gerenciadorarvores.cpp \
+		../objetos/placaanuncio.cpp \
+		../objetos/teclado.cpp 
 OBJECTS       = main.o \
 		Camera.o \
 		CameraDistante.o \
@@ -79,7 +83,11 @@ OBJECTS       = main.o \
 		OpenTextures.o \
 		arvorecomplexa.o \
 		arvoresimples.o \
-		gerenciadorarquivo.o
+		carro3d.o \
+		gerenciadorarquivo.o \
+		gerenciadorarvores.o \
+		placaanuncio.o \
+		teclado.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -164,8 +172,13 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		objetos/arvore.h \
 		objetos/arvorecomplexa.h \
 		objetos/arvoresimples.h \
+		objetos/carro3d.h \
 		objetos/gerenciadorarquivo.h \
-		objetos/objeto.h ../main.cpp \
+		objetos/gerenciadorarvores.h \
+		objetos/grama.h \
+		objetos/objeto.h \
+		objetos/placaanuncio.h \
+		objetos/teclado.h ../main.cpp \
 		../bib/Camera.cpp \
 		../bib/CameraDistante.cpp \
 		../bib/CameraJogo.cpp \
@@ -178,7 +191,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../gui_glut/OpenTextures.cpp \
 		../objetos/arvorecomplexa.cpp \
 		../objetos/arvoresimples.cpp \
-		../objetos/gerenciadorarquivo.cpp
+		../objetos/carro3d.cpp \
+		../objetos/gerenciadorarquivo.cpp \
+		../objetos/gerenciadorarvores.cpp \
+		../objetos/placaanuncio.cpp \
+		../objetos/teclado.cpp
 QMAKE_TARGET  = GLUTdoZero
 DESTDIR       = 
 TARGET        = GLUTdoZero
@@ -391,7 +408,12 @@ main.o: ../main.cpp ../objetos/arvoresimples.h \
 		../bib/Desenha.h \
 		../bib/model3ds.h \
 		../objetos/gerenciadorarquivo.h \
-		../bib/gerenciadorcameras.h
+		../bib/gerenciadorcameras.h \
+		../objetos/teclado.h \
+		../objetos/placaanuncio.h \
+		../objetos/gerenciadorarvores.h \
+		../objetos/grama.h \
+		../objetos/carro3d.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
 Camera.o: ../bib/Camera.cpp ../bib/Camera.h \
@@ -457,12 +479,51 @@ arvoresimples.o: ../objetos/arvoresimples.cpp ../objetos/arvoresimples.h \
 		../objetos/objeto.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arvoresimples.o ../objetos/arvoresimples.cpp
 
+carro3d.o: ../objetos/carro3d.cpp ../objetos/carro3d.h \
+		../bib/model3ds.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o carro3d.o ../objetos/carro3d.cpp
+
 gerenciadorarquivo.o: ../objetos/gerenciadorarquivo.cpp ../objetos/gerenciadorarquivo.h \
 		../objetos/objeto.h \
 		../objetos/arvoresimples.h \
 		../objetos/arvore.h \
 		../objetos/arvorecomplexa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gerenciadorarquivo.o ../objetos/gerenciadorarquivo.cpp
+
+gerenciadorarvores.o: ../objetos/gerenciadorarvores.cpp ../objetos/gerenciadorarvores.h \
+		../objetos/arvoresimples.h \
+		../objetos/arvore.h \
+		../objetos/objeto.h \
+		../objetos/arvorecomplexa.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gerenciadorarvores.o ../objetos/gerenciadorarvores.cpp
+
+placaanuncio.o: ../objetos/placaanuncio.cpp ../objetos/placaanuncio.h \
+		../gui_glut/gui.h \
+		../gui_glut/extra.h \
+		../bib/CameraDistante.h \
+		../bib/Camera.h \
+		../bib/Vetor3D.h \
+		../bib/CameraJogo.h \
+		../bib/Desenha.h \
+		../bib/model3ds.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o placaanuncio.o ../objetos/placaanuncio.cpp
+
+teclado.o: ../objetos/teclado.cpp ../objetos/teclado.h \
+		../objetos/gerenciadorarquivo.h \
+		../objetos/objeto.h \
+		../bib/gerenciadorcameras.h \
+		../bib/Camera.h \
+		../bib/Vetor3D.h \
+		../bib/CameraDistante.h \
+		../bib/CameraJogo.h \
+		../gui_glut/gui.h \
+		../gui_glut/extra.h \
+		../bib/Desenha.h \
+		../bib/model3ds.h \
+		../objetos/arvoresimples.h \
+		../objetos/arvore.h \
+		../objetos/arvorecomplexa.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o teclado.o ../objetos/teclado.cpp
 
 ####### Install
 
