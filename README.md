@@ -2,6 +2,19 @@
 
 Este é um modelador gráfico interativo desenvolvido em **C++** e **OpenGL/GLUT** para manipular objetos 3D, permitindo **transformações, seleção, movimentação, rotação, escalonamento, salvar e carregar objetos via JSON.**
 
+### 📌 **Trabalho da disciplina de Computação Gráfica**  
+**Universidade Federal do Ceará - Campus Quixadá**  
+**Professor: Rubens Nunes**  
+**Autor: Antonio Andson da Silva**  
+
+---
+
+## 📸 **Cena do projeto**
+
+A imagem abaixo representa a cena final do projeto. O ambiente inclui uma pista inclinada, um carro 3D, árvores fixas e uma placa de anúncio. O carro percorre a pista de forma interativa, e os objetos podem ser adicionados, manipulados e removidos dinâmicamente.
+
+![Cena do Projeto](./mnt/data/Captura%20de%20tela%20de%202025-02-21%2019-59-35.png)
+
 ---
 
 ## 🚀 **Como executar o projeto**
@@ -87,5 +100,27 @@ Este projeto foi desenvolvido para permitir a modelagem interativa de cenários 
 
 ---
 
+## 📋 **Requisitos do Trabalho**
+
+### **Implementação do Modelador (6.0 pontos)**
+- Implementação Orientada a Objetos (2.5 pontos)
+- Manipulação do Vetor de Objetos (1.5 pontos)
+- Modificação dos Atributos do Objeto Selecionado (1.5 pontos)
+- Permitir salvar e carregar objetos (0.5 pontos)
+
+### **Câmeras (1.0 ponto)**
+- Implementação da Câmera Base (0.2 pontos)
+- Câmeras Pré-Estabelecidas (0.8 pontos)
+
+### **Modelagem Final (3.0 pontos)**
+- Modelagem de um cenário detalhado
+- Pelo menos 5 tipos de objetos diferentes
+- Uso de **glBegin(...);...glEnd();** em pelo menos 2 objetos
+- Definição correta de **glNormal3f(...)** nas faces
+- Pelo menos **2 faces inclinadas**
+
+---
+
 ## 📌 **Autor**
 Desenvolvido por **Antonio Andson da Silva**, Cientista da Computação. 🚀
+
