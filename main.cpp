@@ -335,7 +335,7 @@ void teclado(unsigned char tecla, int x, int y) {
 }
 
 void adicionarArvoresFixas() {
-    float posicaoX = 1.5;  // Mantém todas alinhadas no eixo X
+    float posicaoX = 2.0;  // Mantém todas alinhadas no eixo X
     float posicaoZInicial = -6.0;  // Primeira árvore
     float espacamentoZ = 2.5;  // Espaço fixo entre as árvores
     int quantidadeArvores = 4;  // Número total de árvores
@@ -345,23 +345,41 @@ void adicionarArvoresFixas() {
 
         if (i % 2 == 0) { // Árvores Simples
             auto arvore = make_unique<ArvoreSimples>(
-                posicaoX, 0.0, posicaoZ,   // Posição com X fixo e Z ajustado
+                posicaoX, 0.0, posicaoZ,  // Posição com X fixo e Z ajustado
                 1.2f, 0.2f, 0.5f, 0.3f,  // Escala
                 0.55f, 0.27f, 0.07f, 0.0f, 0.8f, 0.0f  // Cores
                 );
             arvore->setMostrarEixos(false);
+
+            // Inclinar e ajustar a altura da PRIMEIRA árvore
+            if (i == 0) {
+                arvore->rotacaoZ = 20.0; // Inclina a árvore no eixo Z
+                arvore->translacaoY = -0.5; // Move mais para baixo para tocar o solo
+            }
+
             objetos.push_back(move(arvore));
         } else { // Árvores Complexas
             auto arvore = make_unique<ArvoreComplexa>(
-                posicaoX, 0.0, posicaoZ,   // Posição com X fixo e Z ajustado
+                posicaoX, 0.0, posicaoZ,  // Posição com X fixo e Z ajustado
                 1.0f, 0.25f, 0.8f, 0.35f,  // Escala
                 0.6f, 0.3f, 0.1f, 0.0f, 0.7f, 0.0f  // Cores
                 );
             arvore->setMostrarEixos(false);
+
+            // Inclinar e ajustar a altura da PRIMEIRA árvore
+            if (i == 0) {
+                arvore->rotacaoZ = 20.0; // Inclina a árvore no eixo Z
+                arvore->translacaoY = -1; // Move mais para baixo para tocar o solo
+            }
+
             objetos.push_back(move(arvore));
         }
     }
 }
+
+
+
+
 
 
 
