@@ -13,7 +13,7 @@ Este é um modelador gráfico interativo desenvolvido em **C++** e **OpenGL/GLUT
 
 A imagem abaixo representa a cena final do projeto. O ambiente inclui uma pista inclinada, um carro 3D, árvores fixas e uma placa de anúncio. O carro percorre a pista de forma interativa, e os objetos podem ser adicionados, manipulados e removidos dinâmicamente.
 
-![Cena do Projeto](./mnt/data/Captura%20de%20tela%20de%202025-02-21%2019-59-35.png)
+![cena](https://github.com/user-attachments/assets/5efd2bc5-8300-46b4-aaca-8972d520625d)
 
 ---
 
